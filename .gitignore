@@ -1,0 +1,11 @@
+.DS_Store
+node_modules/
+build/
+.gradle/
+*.class
+.idea/
+*.pem
+*.key
+secrets/
+.env
+data/

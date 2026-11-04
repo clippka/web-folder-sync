@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/shell :: shell('Help - FolderSync', ~{::main})}">
+<body>
+  <main id="content">
+    <h1>How FolderSync works</h1>
+    <h2>Manual, not automatic</h2>
+    <p>Nothing syncs on its own. Opening a page, focusing the tab, getting your network back or a server notification never starts anything. <strong>Scan</strong> only shows what would happen. <strong>Sync now</strong> (or <strong>Resume sync</strong> after an interruption) is the only thing that changes files.</p>
+    <h2>The page must stay open</h2>
+    <p>Syncing runs in your browser tab. If the tab is suspended, the page is closed or you leave the app, the run stops; start it again. The browser may ask for folder access again after a restart. Desktop Chrome and Edge are supported; other browsers can use accounts and spaces but cannot sync folders.</p>
+    <h2>Only the current version is kept</h2>
+    <p>There is no history, trash, undo or per-file restore. A deletion you confirm is permanent. When two computers change the same file, both versions are kept until you choose, and then the version you did not choose is released.</p>
+    <h2>Server-readable content</h2>
+    <p>Transport is protected by HTTPS, but files are stored on the server without end-to-end encryption, so the server operator can read them. Your spaces are private to your account; administrators manage accounts but cannot open your spaces.</p>
+    <h2>Unsupported and excluded paths</h2>
+    <p>Names that are unsafe or ambiguous across systems (traversal, reserved names, names differing only by case or Unicode form, very deep paths), links, unreadable entries and files above the size limit are listed after a scan and left untouched. Paths matched by ignore rules and every <code>.git</code> folder are never transferred or deleted.</p>
+    <h2>Another program editing at the same moment</h2>
+    <p>FolderSync checks a file immediately before replacing it, but a browser cannot lock local files. If an editor saves the same file in the instant between that check and the replacement, that edit can be lost. Close editors on files you expect to change from another computer.</p>
+    <h2>Connections</h2>
+    <p>Each browser profile remembers its connected folder in its own site data. Clearing it makes that browser join again as a new device; joining only adds files. Do not connect the same folder from two browser profiles or computers at once.</p>
+  </main>
+</body>
+</html>

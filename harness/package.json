@@ -8,6 +8,7 @@
     "fixtures": "node fixtures/generate.mjs",
     "injector": "node tools/race-injector.mjs",
     "report": "node tools/report.mjs",
-    "test": "node --test test/"
+    "test": "node --test \"test/*.test.mjs\"",
+    "smoke": "node tools/smoke.mjs"
   }
 }

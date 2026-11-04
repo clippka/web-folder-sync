@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/shell :: shell('Devices - FolderSync', ~{::main})}">
+<body>
+  <main id="content">
+    <h1>Devices</h1>
+    <p th:if="${notice}" role="status" th:text="${notice}"></p>
+    <p th:if="${error}" role="alert" class="status-failed" th:text="${error}"></p>
+    <p>A device is a browser profile that connected a folder. Revoking one stops it from planning, uploading or committing at once. Files already on that computer or on the server are not touched. Connecting again from that browser starts a fresh device.</p>
+    <p th:if="${devices.isEmpty()}">No device has connected a folder yet.</p>
+    <table th:unless="${devices.isEmpty()}">
+      <thead><tr><th>Label</th><th>Last seen</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        <tr th:each="d : ${devices}">
+          <td th:text="${d.label}">label</td>
+          <td><span th:if="${d.lastSeen != null}" th:text="${#dates.format(new java.util.Date(d.lastSeen), 'yyyy-MM-dd HH:mm')} + ' UTC'">time</span><span th:if="${d.lastSeen == null}">never</span></td>
+          <td th:text="${d.revoked} ? 'Revoked' : 'Active'">Active</td>
+          <td>
+            <form th:unless="${d.revoked}" th:action="@{/devices/{id}/revoke(id=${d.id})}" method="post" hx-boost="false">
+              <button type="submit" class="danger">Revoke</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

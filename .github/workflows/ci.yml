@@ -1,0 +1,33 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '21' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '24' }
+      - name: Gradle wrapper build and tests
+        run: ./gradlew build --no-daemon
+        shell: bash
+      - name: Harness unit tests
+        run: npm test
+        working-directory: harness
+  image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build container image
+        run: docker build -t foldersync:ci .
+      - name: Start and check readiness
+        run: |
+          mkdir secrets && printf 'ci-admin-password-123' > secrets/admin_password.txt
+          docker run -d --name fs -p 8080:8080 -v "$PWD/secrets/admin_password.txt:/run/secrets/p:ro" --tmpfs /tmp:exec -e FOLDERSYNC_ADMIN_USERNAME=admin -e FOLDERSYNC_ADMIN_PASSWORD_FILE=/run/secrets/p foldersync:ci
+          for i in $(seq 1 40); do curl -fsS localhost:8080/actuator/health/readiness && exit 0; sleep 2; done
+          docker logs fs; exit 1

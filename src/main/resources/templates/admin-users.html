@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/shell :: shell('Users - FolderSync', ~{::main})}">
+<body>
+  <main id="content">
+    <h1>User administration</h1>
+    <p th:if="${notice}" role="status" th:text="${notice}"></p>
+    <p th:if="${error}" role="alert" class="status-failed" th:text="${error}"></p>
+    <p class="note">Administrators manage accounts, quotas and passwords. They cannot see or open anyone's spaces, files or conflicts.</p>
+    <table>
+      <thead><tr><th>User</th><th>Role</th><th>Stored (MiB)</th><th>Quota (GiB)</th><th>Password</th><th>Account</th></tr></thead>
+      <tbody>
+        <tr th:each="r : ${rows}">
+          <td th:text="${r.username}">name</td>
+          <td th:text="${r.role}">USER</td>
+          <td th:text="${#numbers.formatDecimal(r.usedBytes / 1048576.0, 1, 1)}">0</td>
+          <td>
+            <form th:action="@{/admin/users/{id}/quota(id=${r.id})}" method="post" hx-boost="false" class="inline">
+              <input type="text" name="quotaGiB" inputmode="decimal" size="6" placeholder="none" th:value="${r.quotaBytes != null} ? ${r.quotaBytes / 1073741824.0} : ''" aria-label="Quota in GiB, empty for none">
+              <button type="submit">Set</button>
+            </form>
+          </td>
+          <td>
+            <form th:action="@{/admin/users/{id}/password(id=${r.id})}" method="post" hx-boost="false" class="inline">
+              <input type="password" name="password" autocomplete="new-password" minlength="12" placeholder="new password" required aria-label="New password">
+              <button type="submit">Reset</button>
+            </form>
+          </td>
+          <td>
+            <form th:unless="${r.self}" th:action="@{/admin/users/{id}/enabled(id=${r.id})}" method="post" hx-boost="false" class="inline">
+              <input type="hidden" name="enabled" th:value="${!r.enabled}">
+              <button type="submit" th:text="${r.enabled} ? 'Disable' : 'Enable'">Disable</button>
+            </form>
+            <span th:if="${r.self}">(you)</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Create an account</h2>
+    <form th:action="@{/admin/users}" method="post" hx-boost="false">
+      <label>Username <input type="text" name="username" required></label>
+      <label>Initial password (at least 12 characters) <input type="password" name="password" autocomplete="new-password" minlength="12" required></label>
+      <label>Role <select name="role"><option value="USER">User</option><option value="ADMIN">Administrator</option></select></label>
+      <button type="submit">Create</button>
+    </form>
+    <p class="note">There is no public signup. Share the initial password through a separate channel.</p>
+  </main>
+</body>
+</html>

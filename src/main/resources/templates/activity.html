@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/shell :: shell('Activity - FolderSync', ~{::main})}">
+<body>
+  <main id="content">
+    <p><a th:href="@{/spaces/{id}(id=${space.id})}">&larr; <span th:text="${space.name}">space</span></a></p>
+    <h1>Activity</h1>
+    <p class="note">Metadata only: what happened and when. File contents, earlier versions and local folder paths are never recorded, and there is no restore from here.</p>
+    <p th:if="${items.isEmpty()}">Nothing has happened in this space yet.</p>
+    <ul class="activity">
+      <li th:each="i : ${items}">
+        <time th:text="${#dates.format(new java.util.Date(i.ts), 'yyyy-MM-dd HH:mm:ss')} + ' UTC'">time</time>
+        <span th:text="${i.text}">what</span>
+        <span class="detail" th:if="${i.detail != null}" th:text="${i.detail}">detail</span>
+      </li>
+    </ul>
+    <p class="note">Results and per-file errors of your latest run on a computer are shown on the space page in that browser after the run; they are not stored on the server.</p>
+  </main>
+</body>
+</html>

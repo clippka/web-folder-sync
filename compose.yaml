@@ -1,0 +1,35 @@
+# FolderSync: one application instance. Put a TLS-terminating reverse proxy in front (docs/DEPLOYMENT.md).
+services:
+  app:
+    image: foldersync:${FOLDERSYNC_VERSION:-dev}
+    build:
+      context: .
+      args:
+        VERSION: ${FOLDERSYNC_VERSION:-dev}
+    restart: unless-stopped
+    stop_grace_period: 45s
+    # Bind the app port to loopback only; the reverse proxy is the sole client.
+    ports:
+      - "127.0.0.1:${FOLDERSYNC_PORT:-8080}:8080"
+    environment:
+      FOLDERSYNC_ADMIN_USERNAME: ${FOLDERSYNC_ADMIN_USERNAME:-admin}
+      FOLDERSYNC_ADMIN_PASSWORD_FILE: /run/secrets/foldersync_admin_password
+      FOLDERSYNC_MAX_FILE_SIZE_BYTES: ${FOLDERSYNC_MAX_FILE_SIZE_BYTES:-104857600}
+    secrets:
+      - foldersync_admin_password
+    volumes:
+      - foldersync-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:exec,mode=1777  # sqlite-jdbc unpacks its native library here
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+
+secrets:
+  foldersync_admin_password:
+    file: ${FOLDERSYNC_ADMIN_PASSWORD_FILE:-./secrets/admin_password.txt}
+
+volumes:
+  # Holds database, blobs and staging. `docker compose down` keeps it; only `down -v` or `volume rm` deletes it.
+  foldersync-data:

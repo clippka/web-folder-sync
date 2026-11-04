@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/shell :: shell('Spaces - FolderSync', ~{::main})}">
+<body>
+  <main id="content">
+    <h1>Your spaces</h1>
+    <p th:if="${rows.isEmpty()}">You have no sync spaces yet. A space is a private server folder that you can connect to a local folder on each of your computers.</p>
+    <table class="spaces" th:unless="${rows.isEmpty()}">
+      <thead><tr><th>Space</th><th>Connected devices</th><th>Files</th><th>Conflicts</th><th>Last server change</th></tr></thead>
+      <tbody>
+        <tr th:each="row : ${rows}">
+          <td><a th:href="@{/spaces/{id}(id=${row.first.id})}" th:text="${row.first.name}">name</a></td>
+          <td>
+            <span th:if="${row.second.devices.isEmpty()}">none</span>
+            <span th:each="d, st : ${row.second.devices}" th:text="${d.label} + (${st.last} ? '' : ', ')">device</span>
+          </td>
+          <td th:text="${row.second.activeFiles}">0</td>
+          <td><span th:if="${row.second.openConflicts > 0}" class="status-needs-review" th:text="${row.second.openConflicts} + ' to review'">1</span><span th:if="${row.second.openConflicts == 0}">none</span></td>
+          <td><span th:if="${row.second.lastActivityAt != null}" th:text="${#dates.format(new java.util.Date(row.second.lastActivityAt), 'yyyy-MM-dd HH:mm')} + ' UTC'">time</span><span th:if="${row.second.lastActivityAt == null}">nothing yet</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">What is waiting on a computer is only known to that computer's browser: open the space there and press Scan.</p>
+    <form th:action="@{/spaces}" method="post" hx-boost="false">
+      <label>New space name <input type="text" name="name" required maxlength="100"></label>
+      <button type="submit">Create space</button>
+    </form>
+  </main>
+</body>
+</html>

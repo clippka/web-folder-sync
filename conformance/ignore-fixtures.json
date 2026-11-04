@@ -1,0 +1,138 @@
+{
+  "description": "Shared ignore-policy conformance cases. Server (Kotlin) and browser (TypeScript) matchers must produce identical results. 'rule' is '<rule file path>:<line>' or 'builtin:.git' when ignored, null when included.",
+  "cases": [
+    {
+      "name": "basename pattern matches at any depth",
+      "rules": { "": { ".gitignore": "*.log\n" } },
+      "expect": [
+        { "path": "a.log", "dir": false, "ignored": true, "rule": ".gitignore:1" },
+        { "path": "x/y/a.log", "dir": false, "ignored": true, "rule": ".gitignore:1" },
+        { "path": "a.txt", "dir": false, "ignored": false, "rule": null }
+      ]
+    },
+    {
+      "name": "directory pattern prunes descendants and does not match files of the same name",
+      "rules": { "": { ".gitignore": "node_modules/\nbuild\n" } },
+      "expect": [
+        { "path": "node_modules", "dir": true, "ignored": true, "rule": ".gitignore:1" },
+        { "path": "node_modules/pkg/index.js", "dir": false, "ignored": true, "rule": ".gitignore:1" },
+        { "path": "sub/node_modules", "dir": false, "ignored": false, "rule": null },
+        { "path": "build", "dir": false, "ignored": true, "rule": ".gitignore:2" }
+      ]
+    },
+    {
+      "name": "anchored patterns are relative to the rule file directory",
+      "rules": { "": { ".gitignore": "/top.txt\ndocs/gen\n" } },
+      "expect": [
+        { "path": "top.txt", "dir": false, "ignored": true, "rule": ".gitignore:1" },
+        { "path": "sub/top.txt", "dir": false, "ignored": false, "rule": null },
+        { "path": "docs/gen", "dir": false, "ignored": true, "rule": ".gitignore:2" },
+        { "path": "x/docs/gen", "dir": false, "ignored": false, "rule": null }
+      ]
+    },
+    {
+      "name": "negation re-includes when the parent is not excluded",
+      "rules": { "": { ".gitignore": "*.log\n!keep.log\n" } },
+      "expect": [
+        { "path": "a.log", "dir": false, "ignored": true, "rule": ".gitignore:1" },
+        { "path": "keep.log", "dir": false, "ignored": false, "rule": null }
+      ]
+    },
+    {
+      "name": "excluded parent cannot be bypassed by negating a descendant",
+      "rules": { "": { ".gitignore": "out/\n!out/keep.txt\n" } },
+      "expect": [
+        { "path": "out/keep.txt", "dir": false, "ignored": true, "rule": ".gitignore:1" }
+      ]
+    },
+    {
+      "name": "double star forms",
+      "rules": { "": { ".gitignore": "**/cache\nlogs/**\na/**/z\n" } },
+      "expect": [
+        { "path": "cache", "dir": true, "ignored": true, "rule": ".gitignore:1" },
+        { "path": "p/q/cache", "dir": true, "ignored": true, "rule": ".gitignore:1" },
+        { "path": "logs", "dir": true, "ignored": false, "rule": null },
+        { "path": "logs/x.txt", "dir": false, "ignored": true, "rule": ".gitignore:2" },
+        { "path": "a/z", "dir": false, "ignored": true, "rule": ".gitignore:3" },
+        { "path": "a/b/c/z", "dir": false, "ignored": true, "rule": ".gitignore:3" },
+        { "path": "b/z", "dir": false, "ignored": false, "rule": null }
+      ]
+    },
+    {
+      "name": "single star and question mark do not cross slashes; character classes",
+      "rules": { "": { ".gitignore": "a/*.c\nf?.txt\n[abc]x\n[!a-c]y\n" } },
+      "expect": [
+        { "path": "a/m.c", "dir": false, "ignored": true, "rule": ".gitignore:1" },
+        { "path": "a/b/m.c", "dir": false, "ignored": false, "rule": null },
+        { "path": "f1.txt", "dir": false, "ignored": true, "rule": ".gitignore:2" },
+        { "path": "f12.txt", "dir": false, "ignored": false, "rule": null },
+        { "path": "bx", "dir": false, "ignored": true, "rule": ".gitignore:3" },
+        { "path": "dx", "dir": false, "ignored": false, "rule": null },
+        { "path": "dy", "dir": false, "ignored": true, "rule": ".gitignore:4" },
+        { "path": "ay", "dir": false, "ignored": false, "rule": null }
+      ]
+    },
+    {
+      "name": "comments, escapes, trailing spaces",
+      "rules": { "": { ".gitignore": "# comment\n\\#hash\n\\!bang\nspace\\ \ntrail   \n" } },
+      "expect": [
+        { "path": "#hash", "dir": false, "ignored": true, "rule": ".gitignore:2" },
+        { "path": "!bang", "dir": false, "ignored": true, "rule": ".gitignore:3" },
+        { "path": "space ", "dir": false, "ignored": true, "rule": ".gitignore:4" },
+        { "path": "trail", "dir": false, "ignored": true, "rule": ".gitignore:5" },
+        { "path": "comment", "dir": false, "ignored": false, "rule": null }
+      ]
+    },
+    {
+      "name": ".syncignore overrides .gitignore at the same level",
+      "rules": { "": { ".gitignore": "*.env\n", ".syncignore": "!prod.env\n" } },
+      "expect": [
+        { "path": "dev.env", "dir": false, "ignored": true, "rule": ".gitignore:1" },
+        { "path": "prod.env", "dir": false, "ignored": false, "rule": null }
+      ]
+    },
+    {
+      "name": "deeper rules take precedence over shallower rules",
+      "rules": {
+        "": { ".gitignore": "*.tmp\n" },
+        "sub": { ".gitignore": "!*.tmp\nonly.dat\n" }
+      },
+      "expect": [
+        { "path": "a.tmp", "dir": false, "ignored": true, "rule": ".gitignore:1" },
+        { "path": "sub/a.tmp", "dir": false, "ignored": false, "rule": null },
+        { "path": "sub/only.dat", "dir": false, "ignored": true, "rule": "sub/.gitignore:2" },
+        { "path": "only.dat", "dir": false, "ignored": false, "rule": null }
+      ]
+    },
+    {
+      "name": "nested rule files are relative to their own directory",
+      "rules": { "pkg": { ".syncignore": "/gen\n" } },
+      "expect": [
+        { "path": "pkg/gen", "dir": true, "ignored": true, "rule": "pkg/.syncignore:1" },
+        { "path": "gen", "dir": true, "ignored": false, "rule": null },
+        { "path": "pkg/x/gen", "dir": true, "ignored": false, "rule": null }
+      ]
+    },
+    {
+      "name": "any .git segment is excluded and cannot be re-included",
+      "rules": { "": { ".gitignore": "!.git\n!.git/**\n" } },
+      "expect": [
+        { "path": ".git", "dir": true, "ignored": true, "rule": "builtin:.git" },
+        { "path": ".git", "dir": false, "ignored": true, "rule": "builtin:.git" },
+        { "path": "sub/.git", "dir": false, "ignored": true, "rule": "builtin:.git" },
+        { "path": "x/.git/config", "dir": false, "ignored": true, "rule": "builtin:.git" },
+        { "path": ".github/ci.yml", "dir": false, "ignored": false, "rule": null }
+      ]
+    },
+    {
+      "name": "ignore files cannot exclude themselves but an excluded subtree is not traversed",
+      "rules": { "": { ".gitignore": ".gitignore\n.syncignore\nvendor/\n" } },
+      "expect": [
+        { "path": ".gitignore", "dir": false, "ignored": false, "rule": null },
+        { "path": ".syncignore", "dir": false, "ignored": false, "rule": null },
+        { "path": "sub/.gitignore", "dir": false, "ignored": false, "rule": null },
+        { "path": "vendor/.gitignore", "dir": false, "ignored": true, "rule": ".gitignore:3" }
+      ]
+    }
+  ]
+}

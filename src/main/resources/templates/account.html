@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/shell :: shell('Account - FolderSync', ~{::main})}">
+<body>
+  <main id="content">
+    <h1>Account</h1>
+    <p th:if="${notice}" role="status" th:text="${notice}"></p>
+    <p th:if="${error}" role="alert" class="status-failed" th:text="${error}"></p>
+
+    <h2>Storage and limits</h2>
+    <dl class="kv">
+      <dt>Stored for you (all spaces)</dt><dd th:text="${#numbers.formatDecimal(usage.committedBytes / 1048576.0, 1, 1)} + ' MiB'">0 MiB</dd>
+      <dt>Reserved for uploads in progress</dt><dd th:text="${#numbers.formatDecimal(usage.reservedBytes / 1048576.0, 1, 1)} + ' MiB'">0 MiB</dd>
+      <dt>Your quota</dt>
+      <dd><span th:if="${usage.quotaBytes == null}">No quota (limited only by server disk space)</span><span th:if="${usage.quotaBytes != null}" th:text="${#numbers.formatDecimal(usage.quotaBytes / 1048576.0, 1, 1)} + ' MiB across all your spaces'">quota</span></dd>
+      <dt>Largest file</dt><dd th:text="${limits.maxFileSizeBytes} + ' bytes'">104857600 bytes</dd>
+      <dt>Files per space</dt><dd th:text="${limits.maxIncludedFiles}">25000</dd>
+    </dl>
+    <p class="note">Lowering a quota never removes data: it only stops new uploads until you are under it. Downloads and confirmed deletions keep working.</p>
+
+    <h2>Change password</h2>
+    <form th:action="@{/account/password}" method="post" hx-boost="false">
+      <label>Current password <input type="password" name="currentPassword" autocomplete="current-password" required></label>
+      <label>New password (at least 12 characters) <input type="password" name="newPassword" autocomplete="new-password" minlength="12" required></label>
+      <label>Repeat new password <input type="password" name="confirmPassword" autocomplete="new-password" minlength="12" required></label>
+      <button type="submit">Change password</button>
+    </form>
+    <p class="note">Changing your password signs you out everywhere.</p>
+
+    <h2>Privacy</h2>
+    <p>Files are protected in transit by HTTPS, but they are stored on the server without end-to-end encryption, so the server operator can read them. Only the current version of each file is kept.</p>
+  </main>
+</body>
+</html>

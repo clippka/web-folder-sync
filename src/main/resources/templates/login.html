@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in - FolderSync</title>
+</head>
+<body>
+  <main>
+    <h1>Sign in</h1>
+    <p th:if="${param.error}" role="alert">Sign-in failed. Check your username and password.</p>
+    <p th:if="${param.logout}">You have been signed out.</p>
+    <p th:if="${param.changed}">Your password was changed. Sign in again with the new password.</p>
+    <form th:action="@{/login}" method="post">
+      <label>Username <input type="text" name="username" autocomplete="username" required autofocus></label>
+      <label>Password <input type="password" name="password" autocomplete="current-password" required></label>
+      <button type="submit">Sign in</button>
+    </form>
+  </main>
+</body>
+</html>

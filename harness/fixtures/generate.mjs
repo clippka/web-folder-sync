@@ -12,6 +12,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { parseArgs } from 'node:util';
+import { pathToFileURL } from 'node:url';
 
 export const PRUNED_DIRS = ['node_modules', 'build', 'target', '.gradle', '.git', 'dist'];
 export const LIMIT_BYTES = 104_857_600;
@@ -238,7 +239,7 @@ export function generate(opts) {
   return manifest;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   const { values } = parseArgs({
     options: {
       out: { type: 'string' }, files: { type: 'string', default: '1000' }, seed: { type: 'string', default: '1' },

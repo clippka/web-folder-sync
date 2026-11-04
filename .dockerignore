@@ -1,0 +1,9 @@
+.git
+build
+.gradle
+**/node_modules
+data
+harness
+e2e
+docs
+*.md

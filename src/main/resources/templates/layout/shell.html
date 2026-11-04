@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="shell(title, content)">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''">
+  <!-- The user id namespaces the browser-side folder bindings; it is empty when nobody is signed in. -->
+  <meta name="foldersync-user" th:content="${currentUserId}">
+  <!-- No inline styles or eval: the CSP forbids them. -->
+  <meta name="htmx-config" content='{"includeIndicatorStyles":false,"allowEval":false,"allowScriptTags":false}'>
+  <title th:text="${title}">FolderSync</title>
+  <link rel="stylesheet" th:href="@{/app/app.css}">
+</head>
+<body hx-boost="true" hx-target="#content" hx-select="#content" hx-swap="outerHTML">
+  <header>
+    <strong>FolderSync</strong>
+    <nav th:if="${currentUserId != ''}">
+      <a th:href="@{/spaces}">Spaces</a>
+      <a th:href="@{/devices}">Devices</a>
+      <a th:href="@{/account}">Account</a>
+      <a th:if="${isAdmin}" th:href="@{/admin/users}">Users</a>
+      <a th:href="@{/help}">Help</a>
+      <form th:action="@{/logout}" method="post" hx-boost="false" class="inline" id="logout-form">
+        <span th:text="${currentUsername}"></span>
+        <button type="submit">Sign out</button>
+      </form>
+    </nav>
+    <span id="coordinator-status"></span>
+  </header>
+  <!-- Only #content is an HTMX swap target. The coordinator script sits outside it and loads once. -->
+  <main id="content" th:replace="${content}">content</main>
+  <script th:src="@{/app/htmx.min.js}"></script>
+  <script type="module" th:src="@{/app/coordinator.js}"></script>
+</body>
+</html>
