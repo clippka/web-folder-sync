@@ -1,0 +1,1724 @@
+{
+ "harness": 1,
+ "env": {
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+  "platform": "macOS",
+  "platformVersion": "26.6.2",
+  "architecture": "arm",
+  "browser": "chrome",
+  "browserVersion": "156.0.8078.80",
+  "brands": [
+   {
+    "brand": "Chromium",
+    "version": "156.0.8078.80"
+   },
+   {
+    "brand": "Google Chrome",
+    "version": "156.0.8078.80"
+   }
+  ],
+  "secureContext": true,
+  "origin": "http://127.0.0.1:8443",
+  "hardwareConcurrency": 15,
+  "deviceMemoryGiB": 32,
+  "hasPerformanceMemory": true,
+  "timestamp": "2026-11-04T08:24:47.138Z"
+ },
+ "scenario": "1k",
+ "results": {
+  "capabilities": {
+   "checks": [
+    {
+     "name": "secure context",
+     "ok": true
+    },
+    {
+     "name": "showDirectoryPicker",
+     "ok": true
+    },
+    {
+     "name": "FileSystemHandle.queryPermission",
+     "ok": true
+    },
+    {
+     "name": "FileSystemHandle.requestPermission",
+     "ok": true
+    },
+    {
+     "name": "FileSystemHandle.isSameEntry",
+     "ok": true
+    },
+    {
+     "name": "FileSystemFileHandle.createWritable",
+     "ok": true
+    },
+    {
+     "name": "FileSystemDirectoryHandle.resolve",
+     "ok": true
+    },
+    {
+     "name": "FileSystemDirectoryHandle.entries (async iteration)",
+     "ok": true
+    },
+    {
+     "name": "navigator.locks (Web Locks)",
+     "ok": true
+    },
+    {
+     "name": "IndexedDB",
+     "ok": true
+    },
+    {
+     "name": "module Worker",
+     "ok": true
+    },
+    {
+     "name": "crypto.subtle",
+     "ok": true
+    },
+    {
+     "name": "BroadcastChannel",
+     "ok": true
+    },
+    {
+     "name": "performance.memory (JS heap sampling)",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "FileSystemObserver (not required)",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "document.onfreeze (Page Lifecycle)",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "storage.persisted()",
+     "ok": null,
+     "detail": "false"
+    },
+    {
+     "name": "root permission (read)",
+     "ok": null,
+     "detail": "granted"
+    },
+    {
+     "name": "root permission (readwrite)",
+     "ok": null,
+     "detail": "granted"
+    },
+    {
+     "name": "write then read returns identical bytes",
+     "ok": true
+    },
+    {
+     "name": "removeEntry on a file",
+     "ok": true
+    }
+   ],
+   "status": "pass",
+   "durationMs": 532.8000000119209,
+   "id": "capabilities",
+   "scenario": "1k",
+   "at": "2026-11-04T08:20:55.135Z",
+   "rootKind": "picked"
+  },
+  "handle-persist": {
+   "checks": [
+    {
+     "name": "handle structured-clones into IndexedDB and back",
+     "ok": true
+    },
+    {
+     "name": "stored handle isSameEntry(original)",
+     "ok": true
+    },
+    {
+     "name": "permission on stored handle (readwrite)",
+     "ok": null,
+     "detail": "granted"
+    },
+    {
+     "name": "two independently obtained handles for one directory are isSameEntry",
+     "ok": true
+    },
+    {
+     "name": "root.resolve(descendant) gives the relative path",
+     "ok": true
+    },
+    {
+     "name": "descendant.resolve(root) is null (ancestor not detectable downward)",
+     "ok": true
+    },
+    {
+     "name": "file handle: isSameEntry across handles",
+     "ok": true
+    },
+    {
+     "name": "handle.name is not an identity (only the leaf name)",
+     "ok": null,
+     "detail": "1k"
+    }
+   ],
+   "status": "pass",
+   "durationMs": 11.399999976158142,
+   "id": "handle-persist",
+   "scenario": "1k",
+   "at": "2026-11-04T08:21:02.339Z",
+   "rootKind": "picked"
+  },
+  "identity-other": {
+   "status": "error",
+   "error": "AbortError: Failed to execute 'showDirectoryPicker' on 'Window': The user aborted a request.\nAbortError: Failed to execute 'showDirectoryPicker' on 'Window': The user aborted a request.",
+   "durationMs": 2688.699999988079,
+   "checks": [],
+   "id": "identity-other",
+   "scenario": "1k",
+   "at": "2026-11-04T08:21:08.645Z",
+   "rootKind": "picked",
+   "invalid": "operator cancelled the folder picker; superseded by later identity-other runs"
+  },
+  "race": {
+   "checks": [
+    {
+     "name": "injector detected",
+     "ok": null,
+     "detail": "{\"marker\":\"probe@286179.90000003576\",\"mode\":\"replace\",\"at\":\"2026-11-04T08:24:35.341Z\",\"ok\":true,\"durationMs\":0.556125}"
+    },
+    {
+     "name": "recheck immediately before mutation detects the external edit (hash differs)",
+     "ok": true,
+     "detail": "9660b330 -> fb4e7e47"
+    },
+    {
+     "name": "does size or lastModified alone reveal it? (cache optimisations must not rely on these)",
+     "ok": null,
+     "detail": "{\"sizeChanged\":true,\"lastModifiedChanged\":true}"
+    },
+    {
+     "name": "final recheck passes while nothing changed",
+     "ok": true
+    },
+    {
+     "name": "Phase B outcome (external edit between recheck and write)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST (replacement overwrote it)"
+    },
+    {
+     "name": "Phase C injector result (an error here, e.g. sharing violation, means the OS protected the file)",
+     "ok": null,
+     "detail": "{\"marker\":\"C-during@286375.5\",\"mode\":\"replace\",\"at\":\"2026-11-04T08:24:35.523Z\",\"ok\":true,\"durationMs\":0.4095}"
+    },
+    {
+     "name": "Phase C writable close()",
+     "ok": null,
+     "detail": "ok"
+    },
+    {
+     "name": "Phase C outcome (external edit during replacement)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST"
+    },
+    {
+     "name": "exposure window recheck\u2192close, ms (this is the race window users must be warned about)",
+     "ok": null,
+     "detail": "{\"4 KiB\":{\"p50\":68.2,\"max\":128.1},\"1 MiB\":{\"p50\":71.4,\"max\":87.3},\"10 MiB\":{\"p50\":106.8,\"max\":125.2}}"
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "injectorMode": "replace",
+    "phaseA": {
+     "injectorAck": {
+      "marker": "A-before@286241.5",
+      "mode": "replace",
+      "at": "2026-11-04T08:24:35.385Z",
+      "ok": true,
+      "durationMs": 0.512583
+     },
+     "planned": {
+      "size": 9,
+      "lastModified": 1793780675345,
+      "hash": "9660b3303631e95817f72c7536939f0eca9e20c0d7b86382a39e4a98a1b26151"
+     },
+     "now": {
+      "size": 84,
+      "lastModified": 1793780675385,
+      "hash": "fb4e7e47e708a1f436660a4225214118b067a573a0ddbe6723f490c2104caa3e"
+     }
+    },
+    "phaseB": {
+     "injectorAck": {
+      "marker": "B-after-recheck@286320.1999999881",
+      "mode": "replace",
+      "at": "2026-11-04T08:24:35.467Z",
+      "ok": true,
+      "durationMs": 0.452292
+     },
+     "finalContent": "REPLACEMENT-B\n"
+    },
+    "phaseC": {
+     "injectorAck": {
+      "marker": "C-during@286375.5",
+      "mode": "replace",
+      "at": "2026-11-04T08:24:35.523Z",
+      "ok": true,
+      "durationMs": 0.4095
+     },
+     "close": "ok",
+     "finalSize": 4194304,
+     "startsWithExternal": false
+    },
+    "windowMs": {
+     "4 KiB": {
+      "p50": 68.2,
+      "max": 128.1
+     },
+     "1 MiB": {
+      "p50": 71.4,
+      "max": 87.3
+     },
+     "10 MiB": {
+      "p50": 106.8,
+      "max": 125.2
+     }
+    }
+   },
+   "durationMs": 3726.7999999523163,
+   "id": "race",
+   "scenario": "1k",
+   "at": "2026-11-04T08:24:39.007Z",
+   "rootKind": "picked"
+  },
+  "perf": {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":174,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":222,\"totalMs\":223,\"timeToFirstProgressMs\":10,\"filesPerSec\":4492,\"mibPerSec\":18,\"heapPeakGrowth\":\"1.4 MiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "10 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":210}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 1.4000000357627869,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 174.30000001192093,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 174.30000001192093,
+     "heapBaseBytes": 47489152,
+     "heapPeakBytes": 48024626,
+     "heapPeakGrowthBytes": 535474,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5737,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.800000011920929,
+     "timeToFirstProgressMs": 9.5,
+     "enumerationDoneMs": 222.30000001192093,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 222.5999999642372,
+     "heapBaseBytes": 1813419,
+     "heapPeakBytes": 3269127,
+     "heapPeakGrowthBytes": 1455708,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4492,
+     "mibPerSec": 18
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1.399999976158142,
+     "timeToFirstProgressMs": 7.299999952316284,
+     "enumerationDoneMs": 210,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 210,
+     "heapBaseBytes": 3269127,
+     "heapPeakBytes": 3623799,
+     "heapPeakGrowthBytes": 354672,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4762,
+     "mibPerSec": 20
+    }
+   },
+   "durationMs": 617.0999999642372,
+   "id": "perf",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:16.241Z",
+   "rootKind": "picked"
+  },
+  "links": {
+   "checks": [
+    {
+     "name": "how each entry in __links__ appears (kind/readable/listing)",
+     "ok": null,
+     "detail": "{\"real-dir\":{\"kind\":\"directory\",\"list\":[\"sentinel.txt\"]},\"real-file.txt\":{\"kind\":\"file\",\"read\":\"ok (10 bytes)\"}}"
+    },
+    {
+     "name": "dangling-link as enumerated (absent means the browser hides broken links)",
+     "ok": null,
+     "detail": "not listed"
+    },
+    {
+     "name": "depth-limited walk (a depth of 12 means a followed loop was cut off by the limit)",
+     "ok": null,
+     "detail": "{\"maxDepth\":1,\"visited\":2}"
+    },
+    {
+     "name": "loop followed?",
+     "ok": null,
+     "detail": "no: loop links are not descended"
+    }
+   ],
+   "status": "info",
+   "data": {
+    "entries": {
+     "real-dir": {
+      "kind": "directory",
+      "list": [
+       "sentinel.txt"
+      ]
+     },
+     "real-file.txt": {
+      "kind": "file",
+      "read": "ok (10 bytes)"
+     }
+    },
+    "loop": {
+     "maxDepth": 1,
+     "visited": 2
+    }
+   },
+   "durationMs": 6,
+   "id": "links",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:51.987Z",
+   "rootKind": "picked"
+  },
+  "entries": {
+   "status": "error",
+   "error": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\nTypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+   "durationMs": 24.80000001192093,
+   "checks": [],
+   "id": "entries",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:52.827Z",
+   "rootKind": "picked",
+   "invalid": "harness bug: byte-fidelity sample \"nul.bin\" is rejected by Chromium as a Windows-reserved name. Fixed (renamed zero-bytes.bin) and rerun"
+  },
+  "staged-write": {
+   "checks": [
+    {
+     "name": "original content visible to readers until close()",
+     "ok": true,
+     "detail": "ORIGINAL"
+    },
+    {
+     "name": "directory listing while writer is open (staging artefact visible?)",
+     "ok": null,
+     "detail": "[\"doc.txt\",\"doc.txt.crswap\"]"
+    },
+    {
+     "name": "after close() the replacement is in place",
+     "ok": true
+    },
+    {
+     "name": "no stray entries after close()",
+     "ok": true,
+     "detail": "doc.txt"
+    },
+    {
+     "name": "abort() succeeds",
+     "ok": true
+    },
+    {
+     "name": "original intact after abort()",
+     "ok": true
+    },
+    {
+     "name": "no stray entries after abort()",
+     "ok": true,
+     "detail": "doc.txt"
+    },
+    {
+     "name": "invalid write commands tried until one rejects",
+     "ok": null,
+     "detail": "[\"\\\"bogus\\\": TypeError: Failed to execute 'write' on 'FileSystemWritableFileStream': Failed to read the 'type' property from 'WriteParams': The provided value 'bogus' is not a valid enum value of type WriteCommandType.\"]"
+    },
+    {
+     "name": "original intact after failed write + abort",
+     "ok": true
+    },
+    {
+     "name": "no stray entries after failed write + abort",
+     "ok": true,
+     "detail": "doc.txt"
+    },
+    {
+     "name": "listing with an unclosed writer (page-unload analogue; abort afterwards)",
+     "ok": null,
+     "detail": "[\"doc.txt\",\"doc.txt.crswap\"]"
+    },
+    {
+     "name": "post-write size matches",
+     "ok": true,
+     "detail": "5242880"
+    },
+    {
+     "name": "post-write hash matches",
+     "ok": true
+    },
+    {
+     "name": "second createWritable() while first is open",
+     "ok": null,
+     "detail": "allowed"
+    },
+    {
+     "name": "close results",
+     "ok": null,
+     "detail": "{\"first\":\"ok\",\"second\":\"ok\"}"
+    },
+    {
+     "name": "surviving content (last close wins?)",
+     "ok": null,
+     "detail": "SECOND"
+    },
+    {
+     "name": "removeEntry(non-empty dir) without recursive fails",
+     "ok": true,
+     "detail": "InvalidModificationError: The object can not be modified in this way."
+    },
+    {
+     "name": "non-empty directory and child survive the rejected removal",
+     "ok": true
+    },
+    {
+     "name": "removeEntry(dir containing only an empty subdir) without recursive fails",
+     "ok": true,
+     "detail": "InvalidModificationError: The object can not be modified in this way."
+    },
+    {
+     "name": "removeEntry(empty dir) succeeds",
+     "ok": true
+    },
+    {
+     "name": "keepExistingData:true overwrites in place",
+     "ok": true
+    },
+    {
+     "name": "default createWritable truncates",
+     "ok": true
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "entriesWhileWriterOpen": [
+     "doc.txt",
+     "doc.txt.crswap"
+    ],
+    "entriesWithAbandonedWriter": [
+     "doc.txt",
+     "doc.txt.crswap"
+    ],
+    "secondWritableAllowed": true
+   },
+   "durationMs": 191.10000002384186,
+   "id": "staged-write",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:53.843Z",
+   "rootKind": "picked"
+  },
+  "locks": {
+   "checks": [
+    {
+     "name": "lock is initially free",
+     "ok": true
+    },
+    {
+     "name": "second tab acquired the exclusive lock",
+     "ok": true
+    },
+    {
+     "name": "this tab cannot acquire it while the other tab holds it (ifAvailable)",
+     "ok": true
+    },
+    {
+     "name": "lock is released after the holder tab closes",
+     "ok": true,
+     "detail": "26 ms"
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "releaseAfterTabCloseMs": 26
+   },
+   "durationMs": 82,
+   "id": "locks",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:56.700Z",
+   "rootKind": "picked"
+  },
+  "handle-reload": {
+   "checks": [
+    {
+     "name": "stored handle name/kind",
+     "ok": null,
+     "detail": "1k (directory), stored 2026-11-04T08:21:02.328Z"
+    },
+    {
+     "name": "permission before any prompt",
+     "ok": null,
+     "detail": "granted"
+    },
+    {
+     "name": "can enumerate the folder after reconnect",
+     "ok": true,
+     "detail": "empty, bytes, unicode, config, web"
+    },
+    {
+     "name": "can write after reconnect",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "durationMs": 10.300000011920929,
+   "id": "handle-reload",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:57.878Z",
+   "rootKind": "picked"
+  },
+  "hashing": {
+   "checks": [
+    {
+     "name": "JS SHA-256 equals WebCrypto for boundary lengths",
+     "ok": true
+    },
+    {
+     "name": "exact.bin: on-disk size is 104857600",
+     "ok": true,
+     "detail": "104857600"
+    },
+    {
+     "name": "exact.bin: worker slice hash equals streamed-write hash",
+     "ok": true
+    },
+    {
+     "name": "exact.bin: worker stream hash equals streamed-write hash",
+     "ok": true
+    },
+    {
+     "name": "exact.bin: main-thread JS heap growth < 64 MiB while writing + hashing (provisional bound)",
+     "ok": true,
+     "detail": "18.1 MiB"
+    },
+    {
+     "name": "exact.bin: max main-thread lag during write+hash",
+     "ok": null,
+     "detail": "4 ms"
+    },
+    {
+     "name": "plus-one.bin: on-disk size is 104857601",
+     "ok": true,
+     "detail": "104857601"
+    },
+    {
+     "name": "plus-one.bin: worker slice hash equals streamed-write hash",
+     "ok": true
+    },
+    {
+     "name": "plus-one.bin: worker stream hash equals streamed-write hash",
+     "ok": true
+    },
+    {
+     "name": "plus-one.bin: main-thread JS heap growth < 64 MiB while writing + hashing (provisional bound)",
+     "ok": true,
+     "detail": "40.1 MiB"
+    },
+    {
+     "name": "plus-one.bin: max main-thread lag during write+hash",
+     "ok": null,
+     "detail": "4 ms"
+    },
+    {
+     "name": "boundary sizes used (policy decision on eligibility is Step 3/7)",
+     "ok": null,
+     "detail": "{\"exact\":104857600,\"plusOne\":104857601}"
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "exact.bin.slice": {
+     "ms": 442,
+     "mibPerSec": 226
+    },
+    "exact.bin.stream": {
+     "ms": 388,
+     "mibPerSec": 258
+    },
+    "exact.bin.memory": {
+     "heapBaseBytes": 43179416,
+     "heapPeakBytes": 62152222,
+     "heapPeakGrowthBytes": 18972806,
+     "maxMainThreadLagMs": 4,
+     "writeMs": 712
+    },
+    "plus-one.bin.slice": {
+     "ms": 425,
+     "mibPerSec": 235
+    },
+    "plus-one.bin.stream": {
+     "ms": 384,
+     "mibPerSec": 261
+    },
+    "plus-one.bin.memory": {
+     "heapBaseBytes": 26934130,
+     "heapPeakBytes": 68976350,
+     "heapPeakGrowthBytes": 42042220,
+     "maxMainThreadLagMs": 4,
+     "writeMs": 731
+    }
+   },
+   "durationMs": 3118.199999988079,
+   "id": "hashing",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:58.838Z",
+   "rootKind": "picked"
+  }
+ },
+ "history": [
+  {
+   "checks": [
+    {
+     "name": "secure context",
+     "ok": true
+    },
+    {
+     "name": "showDirectoryPicker",
+     "ok": true
+    },
+    {
+     "name": "FileSystemHandle.queryPermission",
+     "ok": true
+    },
+    {
+     "name": "FileSystemHandle.requestPermission",
+     "ok": true
+    },
+    {
+     "name": "FileSystemHandle.isSameEntry",
+     "ok": true
+    },
+    {
+     "name": "FileSystemFileHandle.createWritable",
+     "ok": true
+    },
+    {
+     "name": "FileSystemDirectoryHandle.resolve",
+     "ok": true
+    },
+    {
+     "name": "FileSystemDirectoryHandle.entries (async iteration)",
+     "ok": true
+    },
+    {
+     "name": "navigator.locks (Web Locks)",
+     "ok": true
+    },
+    {
+     "name": "IndexedDB",
+     "ok": true
+    },
+    {
+     "name": "module Worker",
+     "ok": true
+    },
+    {
+     "name": "crypto.subtle",
+     "ok": true
+    },
+    {
+     "name": "BroadcastChannel",
+     "ok": true
+    },
+    {
+     "name": "performance.memory (JS heap sampling)",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "FileSystemObserver (not required)",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "document.onfreeze (Page Lifecycle)",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "storage.persisted()",
+     "ok": null,
+     "detail": "false"
+    },
+    {
+     "name": "root permission (read)",
+     "ok": null,
+     "detail": "granted"
+    },
+    {
+     "name": "root permission (readwrite)",
+     "ok": null,
+     "detail": "granted"
+    },
+    {
+     "name": "write then read returns identical bytes",
+     "ok": true
+    },
+    {
+     "name": "removeEntry on a file",
+     "ok": true
+    }
+   ],
+   "status": "pass",
+   "durationMs": 532.8000000119209,
+   "id": "capabilities",
+   "scenario": "1k",
+   "at": "2026-11-04T08:20:55.135Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "handle structured-clones into IndexedDB and back",
+     "ok": true
+    },
+    {
+     "name": "stored handle isSameEntry(original)",
+     "ok": true
+    },
+    {
+     "name": "permission on stored handle (readwrite)",
+     "ok": null,
+     "detail": "granted"
+    },
+    {
+     "name": "two independently obtained handles for one directory are isSameEntry",
+     "ok": true
+    },
+    {
+     "name": "root.resolve(descendant) gives the relative path",
+     "ok": true
+    },
+    {
+     "name": "descendant.resolve(root) is null (ancestor not detectable downward)",
+     "ok": true
+    },
+    {
+     "name": "file handle: isSameEntry across handles",
+     "ok": true
+    },
+    {
+     "name": "handle.name is not an identity (only the leaf name)",
+     "ok": null,
+     "detail": "1k"
+    }
+   ],
+   "status": "pass",
+   "durationMs": 11.399999976158142,
+   "id": "handle-persist",
+   "scenario": "1k",
+   "at": "2026-11-04T08:21:02.339Z",
+   "rootKind": "picked"
+  },
+  {
+   "status": "error",
+   "error": "AbortError: Failed to execute 'showDirectoryPicker' on 'Window': The user aborted a request.\nAbortError: Failed to execute 'showDirectoryPicker' on 'Window': The user aborted a request.",
+   "durationMs": 2688.699999988079,
+   "checks": [],
+   "id": "identity-other",
+   "scenario": "1k",
+   "at": "2026-11-04T08:21:08.645Z",
+   "rootKind": "picked",
+   "invalid": "operator cancelled the folder picker; superseded by later identity-other runs"
+  },
+  {
+   "checks": [
+    {
+     "name": "injector detected",
+     "ok": null,
+     "detail": "{\"marker\":\"probe@196519.19999998808\",\"mode\":\"append.\",\"at\":\"2026-11-04T08:23:05.678Z\",\"ok\":true,\"durationMs\":1.031417}"
+    },
+    {
+     "name": "recheck immediately before mutation detects the external edit (hash differs)",
+     "ok": false,
+     "detail": "9660b330 -> 9660b330"
+    },
+    {
+     "name": "does size or lastModified alone reveal it? (cache optimisations must not rely on these)",
+     "ok": null,
+     "detail": "{\"sizeChanged\":false,\"lastModifiedChanged\":false}"
+    },
+    {
+     "name": "final recheck passes while nothing changed",
+     "ok": true
+    },
+    {
+     "name": "Phase B outcome (external edit between recheck and write)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST (replacement overwrote it)"
+    },
+    {
+     "name": "Phase C injector result (an error here, e.g. sharing violation, means the OS protected the file)",
+     "ok": null,
+     "detail": "{\"marker\":\"C-during@196749.19999998808\",\"mode\":\"append.\",\"at\":\"2026-11-04T08:23:05.902Z\",\"ok\":true,\"durationMs\":0.02375}"
+    },
+    {
+     "name": "Phase C writable close()",
+     "ok": null,
+     "detail": "ok"
+    },
+    {
+     "name": "Phase C outcome (external edit during replacement)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST"
+    },
+    {
+     "name": "exposure window recheck\u2192close, ms (this is the race window users must be warned about)",
+     "ok": null,
+     "detail": "{\"4 KiB\":{\"p50\":73.1,\"max\":108.1},\"1 MiB\":{\"p50\":112.3,\"max\":201.5},\"10 MiB\":{\"p50\":146.1,\"max\":167.7}}"
+    }
+   ],
+   "status": "fail",
+   "data": {
+    "injectorMode": "append.",
+    "phaseA": {
+     "injectorAck": {
+      "marker": "A-before@196583.40000003576",
+      "mode": "append.",
+      "at": "2026-11-04T08:23:05.745Z",
+      "ok": true,
+      "durationMs": 0.03825
+     },
+     "planned": {
+      "size": 9,
+      "lastModified": 1793780585691,
+      "hash": "9660b3303631e95817f72c7536939f0eca9e20c0d7b86382a39e4a98a1b26151"
+     },
+     "now": {
+      "size": 9,
+      "lastModified": 1793780585691,
+      "hash": "9660b3303631e95817f72c7536939f0eca9e20c0d7b86382a39e4a98a1b26151"
+     }
+    },
+    "phaseB": {
+     "injectorAck": {
+      "marker": "B-after-recheck@196679.10000002384",
+      "mode": "append.",
+      "at": "2026-11-04T08:23:05.842Z",
+      "ok": true,
+      "durationMs": 0.029667
+     },
+     "finalContent": "REPLACEMENT-B\n"
+    },
+    "phaseC": {
+     "injectorAck": {
+      "marker": "C-during@196749.19999998808",
+      "mode": "append.",
+      "at": "2026-11-04T08:23:05.902Z",
+      "ok": true,
+      "durationMs": 0.02375
+     },
+     "close": "ok",
+     "finalSize": 4194304,
+     "startsWithExternal": false
+    },
+    "windowMs": {
+     "4 KiB": {
+      "p50": 73.1,
+      "max": 108.1
+     },
+     "1 MiB": {
+      "p50": 112.3,
+      "max": 201.5
+     },
+     "10 MiB": {
+      "p50": 146.1,
+      "max": 167.7
+     }
+    }
+   },
+   "durationMs": 4692.600000023842,
+   "id": "race",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:10.312Z",
+   "rootKind": "picked",
+   "invalid": "injector was started with mode \"append.\" (trailing period) so it wrote nothing; the run is not evidence. Superseded by the race-append run"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":174,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":222,\"totalMs\":223,\"timeToFirstProgressMs\":10,\"filesPerSec\":4492,\"mibPerSec\":18,\"heapPeakGrowth\":\"1.4 MiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "10 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":210}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 1.4000000357627869,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 174.30000001192093,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 174.30000001192093,
+     "heapBaseBytes": 47489152,
+     "heapPeakBytes": 48024626,
+     "heapPeakGrowthBytes": 535474,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5737,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.800000011920929,
+     "timeToFirstProgressMs": 9.5,
+     "enumerationDoneMs": 222.30000001192093,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 222.5999999642372,
+     "heapBaseBytes": 1813419,
+     "heapPeakBytes": 3269127,
+     "heapPeakGrowthBytes": 1455708,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4492,
+     "mibPerSec": 18
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1.399999976158142,
+     "timeToFirstProgressMs": 7.299999952316284,
+     "enumerationDoneMs": 210,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 210,
+     "heapBaseBytes": 3269127,
+     "heapPeakBytes": 3623799,
+     "heapPeakGrowthBytes": 354672,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4762,
+     "mibPerSec": 20
+    }
+   },
+   "durationMs": 617.0999999642372,
+   "id": "perf",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:16.241Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "how each entry in __links__ appears (kind/readable/listing)",
+     "ok": null,
+     "detail": "{\"real-dir\":{\"kind\":\"directory\",\"list\":[\"sentinel.txt\"]},\"real-file.txt\":{\"kind\":\"file\",\"read\":\"ok (10 bytes)\"}}"
+    },
+    {
+     "name": "dangling-link as enumerated (absent means the browser hides broken links)",
+     "ok": null,
+     "detail": "not listed"
+    },
+    {
+     "name": "depth-limited walk (a depth of 12 means a followed loop was cut off by the limit)",
+     "ok": null,
+     "detail": "{\"maxDepth\":1,\"visited\":2}"
+    },
+    {
+     "name": "loop followed?",
+     "ok": null,
+     "detail": "no: loop links are not descended"
+    }
+   ],
+   "status": "info",
+   "data": {
+    "entries": {
+     "real-dir": {
+      "kind": "directory",
+      "list": [
+       "sentinel.txt"
+      ]
+     },
+     "real-file.txt": {
+      "kind": "file",
+      "read": "ok (10 bytes)"
+     }
+    },
+    "loop": {
+     "maxDepth": 1,
+     "visited": 2
+    }
+   },
+   "durationMs": 6,
+   "id": "links",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:51.987Z",
+   "rootKind": "picked"
+  },
+  {
+   "status": "error",
+   "error": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\nTypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+   "durationMs": 24.80000001192093,
+   "checks": [],
+   "id": "entries",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:52.827Z",
+   "rootKind": "picked",
+   "invalid": "harness bug: byte-fidelity sample \"nul.bin\" is rejected by Chromium as a Windows-reserved name. Fixed (renamed zero-bytes.bin) and rerun"
+  },
+  {
+   "checks": [
+    {
+     "name": "original content visible to readers until close()",
+     "ok": true,
+     "detail": "ORIGINAL"
+    },
+    {
+     "name": "directory listing while writer is open (staging artefact visible?)",
+     "ok": null,
+     "detail": "[\"doc.txt\",\"doc.txt.crswap\"]"
+    },
+    {
+     "name": "after close() the replacement is in place",
+     "ok": true
+    },
+    {
+     "name": "no stray entries after close()",
+     "ok": true,
+     "detail": "doc.txt"
+    },
+    {
+     "name": "abort() succeeds",
+     "ok": true
+    },
+    {
+     "name": "original intact after abort()",
+     "ok": true
+    },
+    {
+     "name": "no stray entries after abort()",
+     "ok": true,
+     "detail": "doc.txt"
+    },
+    {
+     "name": "invalid write commands tried until one rejects",
+     "ok": null,
+     "detail": "[\"\\\"bogus\\\": TypeError: Failed to execute 'write' on 'FileSystemWritableFileStream': Failed to read the 'type' property from 'WriteParams': The provided value 'bogus' is not a valid enum value of type WriteCommandType.\"]"
+    },
+    {
+     "name": "original intact after failed write + abort",
+     "ok": true
+    },
+    {
+     "name": "no stray entries after failed write + abort",
+     "ok": true,
+     "detail": "doc.txt"
+    },
+    {
+     "name": "listing with an unclosed writer (page-unload analogue; abort afterwards)",
+     "ok": null,
+     "detail": "[\"doc.txt\",\"doc.txt.crswap\"]"
+    },
+    {
+     "name": "post-write size matches",
+     "ok": true,
+     "detail": "5242880"
+    },
+    {
+     "name": "post-write hash matches",
+     "ok": true
+    },
+    {
+     "name": "second createWritable() while first is open",
+     "ok": null,
+     "detail": "allowed"
+    },
+    {
+     "name": "close results",
+     "ok": null,
+     "detail": "{\"first\":\"ok\",\"second\":\"ok\"}"
+    },
+    {
+     "name": "surviving content (last close wins?)",
+     "ok": null,
+     "detail": "SECOND"
+    },
+    {
+     "name": "removeEntry(non-empty dir) without recursive fails",
+     "ok": true,
+     "detail": "InvalidModificationError: The object can not be modified in this way."
+    },
+    {
+     "name": "non-empty directory and child survive the rejected removal",
+     "ok": true
+    },
+    {
+     "name": "removeEntry(dir containing only an empty subdir) without recursive fails",
+     "ok": true,
+     "detail": "InvalidModificationError: The object can not be modified in this way."
+    },
+    {
+     "name": "removeEntry(empty dir) succeeds",
+     "ok": true
+    },
+    {
+     "name": "keepExistingData:true overwrites in place",
+     "ok": true
+    },
+    {
+     "name": "default createWritable truncates",
+     "ok": true
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "entriesWhileWriterOpen": [
+     "doc.txt",
+     "doc.txt.crswap"
+    ],
+    "entriesWithAbandonedWriter": [
+     "doc.txt",
+     "doc.txt.crswap"
+    ],
+    "secondWritableAllowed": true
+   },
+   "durationMs": 191.10000002384186,
+   "id": "staged-write",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:53.843Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "lock is initially free",
+     "ok": true
+    },
+    {
+     "name": "second tab acquired the exclusive lock",
+     "ok": true
+    },
+    {
+     "name": "this tab cannot acquire it while the other tab holds it (ifAvailable)",
+     "ok": true
+    },
+    {
+     "name": "lock is released after the holder tab closes",
+     "ok": true,
+     "detail": "26 ms"
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "releaseAfterTabCloseMs": 26
+   },
+   "durationMs": 82,
+   "id": "locks",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:56.700Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "stored handle name/kind",
+     "ok": null,
+     "detail": "1k (directory), stored 2026-11-04T08:21:02.328Z"
+    },
+    {
+     "name": "permission before any prompt",
+     "ok": null,
+     "detail": "granted"
+    },
+    {
+     "name": "can enumerate the folder after reconnect",
+     "ok": true,
+     "detail": "empty, bytes, unicode, config, web"
+    },
+    {
+     "name": "can write after reconnect",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "durationMs": 10.300000011920929,
+   "id": "handle-reload",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:57.878Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "JS SHA-256 equals WebCrypto for boundary lengths",
+     "ok": true
+    },
+    {
+     "name": "exact.bin: on-disk size is 104857600",
+     "ok": true,
+     "detail": "104857600"
+    },
+    {
+     "name": "exact.bin: worker slice hash equals streamed-write hash",
+     "ok": true
+    },
+    {
+     "name": "exact.bin: worker stream hash equals streamed-write hash",
+     "ok": true
+    },
+    {
+     "name": "exact.bin: main-thread JS heap growth < 64 MiB while writing + hashing (provisional bound)",
+     "ok": true,
+     "detail": "18.1 MiB"
+    },
+    {
+     "name": "exact.bin: max main-thread lag during write+hash",
+     "ok": null,
+     "detail": "4 ms"
+    },
+    {
+     "name": "plus-one.bin: on-disk size is 104857601",
+     "ok": true,
+     "detail": "104857601"
+    },
+    {
+     "name": "plus-one.bin: worker slice hash equals streamed-write hash",
+     "ok": true
+    },
+    {
+     "name": "plus-one.bin: worker stream hash equals streamed-write hash",
+     "ok": true
+    },
+    {
+     "name": "plus-one.bin: main-thread JS heap growth < 64 MiB while writing + hashing (provisional bound)",
+     "ok": true,
+     "detail": "40.1 MiB"
+    },
+    {
+     "name": "plus-one.bin: max main-thread lag during write+hash",
+     "ok": null,
+     "detail": "4 ms"
+    },
+    {
+     "name": "boundary sizes used (policy decision on eligibility is Step 3/7)",
+     "ok": null,
+     "detail": "{\"exact\":104857600,\"plusOne\":104857601}"
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "exact.bin.slice": {
+     "ms": 442,
+     "mibPerSec": 226
+    },
+    "exact.bin.stream": {
+     "ms": 388,
+     "mibPerSec": 258
+    },
+    "exact.bin.memory": {
+     "heapBaseBytes": 43179416,
+     "heapPeakBytes": 62152222,
+     "heapPeakGrowthBytes": 18972806,
+     "maxMainThreadLagMs": 4,
+     "writeMs": 712
+    },
+    "plus-one.bin.slice": {
+     "ms": 425,
+     "mibPerSec": 235
+    },
+    "plus-one.bin.stream": {
+     "ms": 384,
+     "mibPerSec": 261
+    },
+    "plus-one.bin.memory": {
+     "heapBaseBytes": 26934130,
+     "heapPeakBytes": 68976350,
+     "heapPeakGrowthBytes": 42042220,
+     "maxMainThreadLagMs": 4,
+     "writeMs": 731
+    }
+   },
+   "durationMs": 3118.199999988079,
+   "id": "hashing",
+   "scenario": "1k",
+   "at": "2026-11-04T08:23:58.838Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "injector detected",
+     "ok": null,
+     "detail": "{\"marker\":\"probe@255823.80000001192\",\"mode\":\"truncate-write\",\"at\":\"2026-11-04T08:24:05.005Z\",\"ok\":true,\"durationMs\":0.296791}"
+    },
+    {
+     "name": "recheck immediately before mutation detects the external edit (hash differs)",
+     "ok": true,
+     "detail": "9660b330 -> 43e50a7b"
+    },
+    {
+     "name": "does size or lastModified alone reveal it? (cache optimisations must not rely on these)",
+     "ok": null,
+     "detail": "{\"sizeChanged\":true,\"lastModifiedChanged\":true}"
+    },
+    {
+     "name": "final recheck passes while nothing changed",
+     "ok": true
+    },
+    {
+     "name": "Phase B outcome (external edit between recheck and write)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST (replacement overwrote it)"
+    },
+    {
+     "name": "Phase C injector result (an error here, e.g. sharing violation, means the OS protected the file)",
+     "ok": null,
+     "detail": "{\"marker\":\"C-during@256040.60000002384\",\"mode\":\"truncate-write\",\"at\":\"2026-11-04T08:24:05.205Z\",\"ok\":true,\"durationMs\":0.241375}"
+    },
+    {
+     "name": "Phase C writable close()",
+     "ok": null,
+     "detail": "ok"
+    },
+    {
+     "name": "Phase C outcome (external edit during replacement)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST"
+    },
+    {
+     "name": "exposure window recheck\u2192close, ms (this is the race window users must be warned about)",
+     "ok": null,
+     "detail": "{\"4 KiB\":{\"p50\":69.3,\"max\":91.6},\"1 MiB\":{\"p50\":70.2,\"max\":95.3},\"10 MiB\":{\"p50\":95.7,\"max\":106}}"
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "injectorMode": "truncate-write",
+    "phaseA": {
+     "injectorAck": {
+      "marker": "A-before@255905.60000002384",
+      "mode": "truncate-write",
+      "at": "2026-11-04T08:24:05.056Z",
+      "ok": true,
+      "durationMs": 0.233834
+     },
+     "planned": {
+      "size": 9,
+      "lastModified": 1793780645010,
+      "hash": "9660b3303631e95817f72c7536939f0eca9e20c0d7b86382a39e4a98a1b26151"
+     },
+     "now": {
+      "size": 100,
+      "lastModified": 1793780645056,
+      "hash": "43e50a7b4945b30136fdfabc97afa6820561d547283c3ded8c66e5f4788bcd13"
+     }
+    },
+    "phaseB": {
+     "injectorAck": {
+      "marker": "B-after-recheck@255984.5",
+      "mode": "truncate-write",
+      "at": "2026-11-04T08:24:05.138Z",
+      "ok": true,
+      "durationMs": 0.195292
+     },
+     "finalContent": "REPLACEMENT-B\n"
+    },
+    "phaseC": {
+     "injectorAck": {
+      "marker": "C-during@256040.60000002384",
+      "mode": "truncate-write",
+      "at": "2026-11-04T08:24:05.205Z",
+      "ok": true,
+      "durationMs": 0.241375
+     },
+     "close": "ok",
+     "finalSize": 4194304,
+     "startsWithExternal": false
+    },
+    "windowMs": {
+     "4 KiB": {
+      "p50": 69.3,
+      "max": 91.6
+     },
+     "1 MiB": {
+      "p50": 70.2,
+      "max": 95.3
+     },
+     "10 MiB": {
+      "p50": 95.7,
+      "max": 106
+     }
+    }
+   },
+   "durationMs": 3596.100000023842,
+   "id": "race",
+   "scenario": "1k",
+   "at": "2026-11-04T08:24:08.518Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "injector detected",
+     "ok": null,
+     "detail": "{\"marker\":\"probe@286179.90000003576\",\"mode\":\"replace\",\"at\":\"2026-11-04T08:24:35.341Z\",\"ok\":true,\"durationMs\":0.556125}"
+    },
+    {
+     "name": "recheck immediately before mutation detects the external edit (hash differs)",
+     "ok": true,
+     "detail": "9660b330 -> fb4e7e47"
+    },
+    {
+     "name": "does size or lastModified alone reveal it? (cache optimisations must not rely on these)",
+     "ok": null,
+     "detail": "{\"sizeChanged\":true,\"lastModifiedChanged\":true}"
+    },
+    {
+     "name": "final recheck passes while nothing changed",
+     "ok": true
+    },
+    {
+     "name": "Phase B outcome (external edit between recheck and write)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST (replacement overwrote it)"
+    },
+    {
+     "name": "Phase C injector result (an error here, e.g. sharing violation, means the OS protected the file)",
+     "ok": null,
+     "detail": "{\"marker\":\"C-during@286375.5\",\"mode\":\"replace\",\"at\":\"2026-11-04T08:24:35.523Z\",\"ok\":true,\"durationMs\":0.4095}"
+    },
+    {
+     "name": "Phase C writable close()",
+     "ok": null,
+     "detail": "ok"
+    },
+    {
+     "name": "Phase C outcome (external edit during replacement)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST"
+    },
+    {
+     "name": "exposure window recheck\u2192close, ms (this is the race window users must be warned about)",
+     "ok": null,
+     "detail": "{\"4 KiB\":{\"p50\":68.2,\"max\":128.1},\"1 MiB\":{\"p50\":71.4,\"max\":87.3},\"10 MiB\":{\"p50\":106.8,\"max\":125.2}}"
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "injectorMode": "replace",
+    "phaseA": {
+     "injectorAck": {
+      "marker": "A-before@286241.5",
+      "mode": "replace",
+      "at": "2026-11-04T08:24:35.385Z",
+      "ok": true,
+      "durationMs": 0.512583
+     },
+     "planned": {
+      "size": 9,
+      "lastModified": 1793780675345,
+      "hash": "9660b3303631e95817f72c7536939f0eca9e20c0d7b86382a39e4a98a1b26151"
+     },
+     "now": {
+      "size": 84,
+      "lastModified": 1793780675385,
+      "hash": "fb4e7e47e708a1f436660a4225214118b067a573a0ddbe6723f490c2104caa3e"
+     }
+    },
+    "phaseB": {
+     "injectorAck": {
+      "marker": "B-after-recheck@286320.1999999881",
+      "mode": "replace",
+      "at": "2026-11-04T08:24:35.467Z",
+      "ok": true,
+      "durationMs": 0.452292
+     },
+     "finalContent": "REPLACEMENT-B\n"
+    },
+    "phaseC": {
+     "injectorAck": {
+      "marker": "C-during@286375.5",
+      "mode": "replace",
+      "at": "2026-11-04T08:24:35.523Z",
+      "ok": true,
+      "durationMs": 0.4095
+     },
+     "close": "ok",
+     "finalSize": 4194304,
+     "startsWithExternal": false
+    },
+    "windowMs": {
+     "4 KiB": {
+      "p50": 68.2,
+      "max": 128.1
+     },
+     "1 MiB": {
+      "p50": 71.4,
+      "max": 87.3
+     },
+     "10 MiB": {
+      "p50": 106.8,
+      "max": 125.2
+     }
+    }
+   },
+   "durationMs": 3726.7999999523163,
+   "id": "race",
+   "scenario": "1k",
+   "at": "2026-11-04T08:24:39.007Z",
+   "rootKind": "picked"
+  }
+ ],
+ "manual": {}
+}

@@ -1,0 +1,13 @@
+{
+  "name": "foldersync-feasibility-harness",
+  "private": true,
+  "type": "module",
+  "description": "Step 1 browser feasibility harness. Zero dependencies; Node 20+ only for the helper scripts.",
+  "scripts": {
+    "serve": "node server.mjs",
+    "fixtures": "node fixtures/generate.mjs",
+    "injector": "node tools/race-injector.mjs",
+    "report": "node tools/report.mjs",
+    "test": "node --test test/"
+  }
+}

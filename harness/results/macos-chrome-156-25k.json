@@ -1,0 +1,959 @@
+{
+ "harness": 1,
+ "env": {
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+  "platform": "macOS",
+  "platformVersion": "26.6.2",
+  "architecture": "arm",
+  "browser": "chrome",
+  "browserVersion": "156.0.8078.80",
+  "brands": [
+   {
+    "brand": "Chromium",
+    "version": "156.0.8078.80"
+   },
+   {
+    "brand": "Google Chrome",
+    "version": "156.0.8078.80"
+   }
+  ],
+  "secureContext": true,
+  "origin": "http://127.0.0.1:8443",
+  "hardwareConcurrency": 15,
+  "deviceMemoryGiB": 32,
+  "hasPerformanceMemory": true,
+  "timestamp": "2026-11-04T08:39:24.127Z"
+ },
+ "scenario": "25k",
+ "results": {
+  "handle-reload": {
+   "checks": [
+    {
+     "name": "stored handle",
+     "ok": null,
+     "detail": "none (expected after clearing site data: fresh enrollment)"
+    }
+   ],
+   "status": "info",
+   "durationMs": 3,
+   "id": "handle-reload",
+   "scenario": "after-clear",
+   "at": "2026-11-04T08:37:54.105Z",
+   "rootKind": "picked"
+  },
+  "perf": {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":163,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":211,\"totalMs\":211,\"timeToFirstProgressMs\":5,\"filesPerSec\":4744,\"mibPerSec\":19,\"heapPeakGrowth\":\"816.8 KiB\",\"maxMainThreadLagMs\":5}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":193}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 1.2999999523162842,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 163.29999995231628,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 163.29999995231628,
+     "heapBaseBytes": 3249868,
+     "heapPeakBytes": 4593812,
+     "heapPeakGrowthBytes": 1343944,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 6124,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.8999999761581421,
+     "timeToFirstProgressMs": 4.899999976158142,
+     "enumerationDoneMs": 210.80000001192093,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 210.80000001192093,
+     "heapBaseBytes": 4593812,
+     "heapPeakBytes": 5430196,
+     "heapPeakGrowthBytes": 836384,
+     "maxMainThreadLagMs": 5,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4744,
+     "mibPerSec": 19
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1,
+     "timeToFirstProgressMs": 9.399999976158142,
+     "enumerationDoneMs": 192.60000002384186,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 192.60000002384186,
+     "heapBaseBytes": 4326660,
+     "heapPeakBytes": 7460726,
+     "heapPeakGrowthBytes": 3134066,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5192,
+     "mibPerSec": 21
+    }
+   },
+   "durationMs": 571,
+   "id": "perf",
+   "scenario": "1k (labelled 25k, folder was 1k)",
+   "at": "2026-11-04T08:38:56.031Z",
+   "rootKind": "picked"
+  }
+ },
+ "history": [
+  {
+   "checks": [
+    {
+     "name": "stored handle",
+     "ok": null,
+     "detail": "none (expected after clearing site data: fresh enrollment)"
+    }
+   ],
+   "status": "info",
+   "durationMs": 3,
+   "id": "handle-reload",
+   "scenario": "after-clear",
+   "at": "2026-11-04T08:37:54.105Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":164,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":232,\"totalMs\":232,\"timeToFirstProgressMs\":8,\"filesPerSec\":4314,\"mibPerSec\":18,\"heapPeakGrowth\":\"489.8 KiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "8 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":190}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.9000000357627869,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 163.80000001192093,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 163.9000000357628,
+     "heapBaseBytes": 1262726,
+     "heapPeakBytes": 2215138,
+     "heapPeakGrowthBytes": 952412,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 6101,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.699999988079071,
+     "timeToFirstProgressMs": 7.5,
+     "enumerationDoneMs": 231.69999998807907,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 231.79999995231628,
+     "heapBaseBytes": 2215138,
+     "heapPeakBytes": 2716714,
+     "heapPeakGrowthBytes": 501576,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4314,
+     "mibPerSec": 18
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1,
+     "timeToFirstProgressMs": 10,
+     "enumerationDoneMs": 190.30000001192093,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 190.30000001192093,
+     "heapBaseBytes": 2265974,
+     "heapPeakBytes": 3900672,
+     "heapPeakGrowthBytes": 1634698,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5255,
+     "mibPerSec": 22
+    }
+   },
+   "durationMs": 593,
+   "id": "perf",
+   "scenario": "1k (labelled 10k, folder was 1k)",
+   "at": "2026-11-04T08:38:32.116Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":187,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":186,\"totalMs\":186,\"timeToFirstProgressMs\":5,\"filesPerSec\":5371,\"mibPerSec\":22,\"heapPeakGrowth\":\"2.0 MiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":191}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 1.4000000357627869,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 186.70000004768372,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 186.70000004768372,
+     "heapBaseBytes": 3367513,
+     "heapPeakBytes": 3911365,
+     "heapPeakGrowthBytes": 543852,
+     "maxMainThreadLagMs": 8,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5356,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.699999988079071,
+     "timeToFirstProgressMs": 4.899999976158142,
+     "enumerationDoneMs": 186.19999998807907,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 186.19999998807907,
+     "heapBaseBytes": 1762480,
+     "heapPeakBytes": 3867977,
+     "heapPeakGrowthBytes": 2105497,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5371,
+     "mibPerSec": 22
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1,
+     "timeToFirstProgressMs": 8.099999964237213,
+     "enumerationDoneMs": 191,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 191,
+     "heapBaseBytes": 2729283,
+     "heapPeakBytes": 3966711,
+     "heapPeakGrowthBytes": 1237428,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5236,
+     "mibPerSec": 21
+    }
+   },
+   "durationMs": 568.5,
+   "id": "perf",
+   "scenario": "1k (labelled 10k, folder was 1k)",
+   "at": "2026-11-04T08:38:33.758Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":200,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":187,\"totalMs\":187,\"timeToFirstProgressMs\":5,\"filesPerSec\":5356,\"mibPerSec\":22,\"heapPeakGrowth\":\"2.1 MiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":193}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 1.4000000357627869,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 200.4000000357628,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 200.4000000357628,
+     "heapBaseBytes": 4852277,
+     "heapPeakBytes": 5297933,
+     "heapPeakGrowthBytes": 445656,
+     "maxMainThreadLagMs": 3,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4990,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.800000011920929,
+     "timeToFirstProgressMs": 5.100000023841858,
+     "enumerationDoneMs": 186.70000004768372,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 186.70000004768372,
+     "heapBaseBytes": 2334601,
+     "heapPeakBytes": 4584683,
+     "heapPeakGrowthBytes": 2250082,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5356,
+     "mibPerSec": 22
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1.0999999642372131,
+     "timeToFirstProgressMs": 8.199999988079071,
+     "enumerationDoneMs": 193.0999999642372,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 193.29999995231628,
+     "heapBaseBytes": 3390015,
+     "heapPeakBytes": 4800579,
+     "heapPeakGrowthBytes": 1410564,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5173,
+     "mibPerSec": 21
+    }
+   },
+   "durationMs": 584.2999999523163,
+   "id": "perf",
+   "scenario": "1k (labelled 10k, folder was 1k)",
+   "at": "2026-11-04T08:38:35.107Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":164,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":187,\"totalMs\":187,\"timeToFirstProgressMs\":6,\"filesPerSec\":5362,\"mibPerSec\":22,\"heapPeakGrowth\":\"997.4 KiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "6 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":210}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.5,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 163.60000002384186,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 163.60000002384186,
+     "heapBaseBytes": 1524648,
+     "heapPeakBytes": 3190063,
+     "heapPeakGrowthBytes": 1665415,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 6112,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.699999988079071,
+     "timeToFirstProgressMs": 5.699999988079071,
+     "enumerationDoneMs": 186.5,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 186.5,
+     "heapBaseBytes": 3190063,
+     "heapPeakBytes": 4211450,
+     "heapPeakGrowthBytes": 1021387,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5362,
+     "mibPerSec": 22
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1.100000023841858,
+     "timeToFirstProgressMs": 8.399999976158142,
+     "enumerationDoneMs": 210.10000002384186,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 210.10000002384186,
+     "heapBaseBytes": 4157970,
+     "heapPeakBytes": 5362438,
+     "heapPeakGrowthBytes": 1204468,
+     "maxMainThreadLagMs": 1,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4760,
+     "mibPerSec": 20
+    }
+   },
+   "durationMs": 562.5999999642372,
+   "id": "perf",
+   "scenario": "1k (labelled 25k, folder was 1k)",
+   "at": "2026-11-04T08:38:53.193Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":164,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":208,\"totalMs\":208,\"timeToFirstProgressMs\":5,\"filesPerSec\":4817,\"mibPerSec\":20,\"heapPeakGrowth\":\"2.1 MiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":196}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.6000000238418579,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 163.60000002384186,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 163.60000002384186,
+     "heapBaseBytes": 4227796,
+     "heapPeakBytes": 4721744,
+     "heapPeakGrowthBytes": 493948,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 6112,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.699999988079071,
+     "timeToFirstProgressMs": 5.199999988079071,
+     "enumerationDoneMs": 207.60000002384186,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 207.60000002384186,
+     "heapBaseBytes": 3094236,
+     "heapPeakBytes": 5328388,
+     "heapPeakGrowthBytes": 2234152,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4817,
+     "mibPerSec": 20
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1,
+     "timeToFirstProgressMs": 14.100000023841858,
+     "enumerationDoneMs": 196.30000001192093,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 196.30000001192093,
+     "heapBaseBytes": 2115575,
+     "heapPeakBytes": 4252994,
+     "heapPeakGrowthBytes": 2137419,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5094,
+     "mibPerSec": 21
+    }
+   },
+   "durationMs": 569.8999999761581,
+   "id": "perf",
+   "scenario": "1k (labelled 25k, folder was 1k)",
+   "at": "2026-11-04T08:38:54.596Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":163,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":211,\"totalMs\":211,\"timeToFirstProgressMs\":5,\"filesPerSec\":4744,\"mibPerSec\":19,\"heapPeakGrowth\":\"816.8 KiB\",\"maxMainThreadLagMs\":5}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":193}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 1.2999999523162842,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 163.29999995231628,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 163.29999995231628,
+     "heapBaseBytes": 3249868,
+     "heapPeakBytes": 4593812,
+     "heapPeakGrowthBytes": 1343944,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 6124,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.8999999761581421,
+     "timeToFirstProgressMs": 4.899999976158142,
+     "enumerationDoneMs": 210.80000001192093,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 210.80000001192093,
+     "heapBaseBytes": 4593812,
+     "heapPeakBytes": 5430196,
+     "heapPeakGrowthBytes": 836384,
+     "maxMainThreadLagMs": 5,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4744,
+     "mibPerSec": 19
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1,
+     "timeToFirstProgressMs": 9.399999976158142,
+     "enumerationDoneMs": 192.60000002384186,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 192.60000002384186,
+     "heapBaseBytes": 4326660,
+     "heapPeakBytes": 7460726,
+     "heapPeakGrowthBytes": 3134066,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5192,
+     "mibPerSec": 21
+    }
+   },
+   "durationMs": 571,
+   "id": "perf",
+   "scenario": "1k (labelled 25k, folder was 1k)",
+   "at": "2026-11-04T08:38:56.031Z",
+   "rootKind": "picked"
+  }
+ ],
+ "manual": {}
+}

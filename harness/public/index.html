@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FolderSync feasibility harness</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header>
+    <h1>FolderSync — Step 1 feasibility harness</h1>
+    <p class="small">Verifies File System Access behaviour for the six OS/browser combinations. Mutating tests only touch <code>__harness_scratch__</code> inside the folder you select (the <em>links</em> test can optionally remove link entries in <code>__links__</code>). Use a disposable or generated fixture folder, never a real project.</p>
+  </header>
+
+  <section id="setup">
+    <h2>Setup</h2>
+    <div class="row">
+      <button id="pick">Select folder (read/write)</button>
+      <span id="root-info">no folder selected</span>
+    </div>
+    <div class="row">
+      <label>Scenario label <input id="scenario" size="40" placeholder="e.g. after-reload, injector=replace, 25k fixture"></label>
+    </div>
+    <pre id="env" class="small"></pre>
+  </section>
+
+  <section>
+    <h2>Automated tests</h2>
+    <div id="tests"></div>
+  </section>
+
+  <section>
+    <h2>Lifecycle: page reopen / focus must not restart work</h2>
+    <div id="lifecycle"></div>
+  </section>
+
+  <section>
+    <h2>Manual scenarios</h2>
+    <div id="manual"></div>
+  </section>
+
+  <section>
+    <h2>Results</h2>
+    <div class="row">
+      <button id="download">Download results JSON</button>
+      <button id="save">Save to harness/results/ via server</button>
+      <button id="reset">Clear stored results</button>
+      <span id="save-info" class="small"></span>
+    </div>
+  </section>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

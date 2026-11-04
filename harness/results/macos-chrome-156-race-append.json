@@ -1,0 +1,2276 @@
+{
+ "harness": 1,
+ "env": {
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+  "platform": "macOS",
+  "platformVersion": "26.6.2",
+  "architecture": "arm",
+  "browser": "chrome",
+  "browserVersion": "156.0.8078.80",
+  "brands": [
+   {
+    "brand": "Chromium",
+    "version": "156.0.8078.80"
+   },
+   {
+    "brand": "Google Chrome",
+    "version": "156.0.8078.80"
+   }
+  ],
+  "secureContext": true,
+  "origin": "http://127.0.0.1:8443",
+  "hardwareConcurrency": 15,
+  "deviceMemoryGiB": 32,
+  "hasPerformanceMemory": true,
+  "timestamp": "2026-11-04T08:49:35.209Z"
+ },
+ "scenario": "race-append",
+ "results": {
+  "handle-reload": {
+   "checks": [
+    {
+     "name": "stored handle",
+     "ok": null,
+     "detail": "none (expected after clearing site data: fresh enrollment)"
+    }
+   ],
+   "status": "info",
+   "durationMs": 3,
+   "id": "handle-reload",
+   "scenario": "after-clear",
+   "at": "2026-11-04T08:37:54.105Z",
+   "rootKind": "picked"
+  },
+  "perf": {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":25000,\"includedBytes\":1073741824,\"emptyDirs\":3,\"excludedFiles\":50002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":25002,\"dirs\":16345,\"prunedDirs\":6,\"ms\":2768,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":25002,\"bytes\":\"1.2 GiB\",\"enumerationMs\":5445,\"totalMs\":5446,\"timeToFirstProgressMs\":5,\"filesPerSec\":4591,\"mibPerSec\":225,\"heapPeakGrowth\":\"8.5 MiB\",\"maxMainThreadLagMs\":12}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":25002,\"hashed\":25002,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=50002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":3,\"filesHashedBeforeCancel\":2453,\"totalMs\":401}"
+    },
+    {
+     "name": "cancellation returns all workers to idle promptly (< 500 ms)",
+     "ok": true,
+     "detail": "3 ms"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 25002,
+     "dirs": 16345,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.699999988079071,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 2767.699999988079,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 2767.699999988079,
+     "heapBaseBytes": 8956262,
+     "heapPeakBytes": 12601576,
+     "heapPeakGrowthBytes": 3645314,
+     "maxMainThreadLagMs": 20,
+     "cancelLatencyMs": null,
+     "filesPerSec": 9033,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 25002,
+     "dirs": 16345,
+     "prunedDirs": 6,
+     "bytes": 1283457025,
+     "timeToFirstEntryMs": 0.8999999761581421,
+     "timeToFirstProgressMs": 5.099999964237213,
+     "enumerationDoneMs": 5445.099999964237,
+     "hashedFiles": 25002,
+     "errors": [],
+     "totalMs": 5445.899999976158,
+     "heapBaseBytes": 9127320,
+     "heapPeakBytes": 18088720,
+     "heapPeakGrowthBytes": 8961400,
+     "maxMainThreadLagMs": 12,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4591,
+     "mibPerSec": 225
+    },
+    "cancel": {
+     "files": 2457,
+     "dirs": 1611,
+     "prunedDirs": 5,
+     "bytes": 103274911,
+     "timeToFirstEntryMs": 3.799999952316284,
+     "timeToFirstProgressMs": 8.599999964237213,
+     "enumerationDoneMs": 400.0999999642372,
+     "hashedFiles": 2453,
+     "errors": [],
+     "totalMs": 400.69999998807907,
+     "heapBaseBytes": 16681717,
+     "heapPeakBytes": 23201037,
+     "heapPeakGrowthBytes": 6519320,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": 3,
+     "filesPerSec": 6132,
+     "mibPerSec": 246
+    }
+   },
+   "durationMs": 8634.699999988079,
+   "id": "perf",
+   "scenario": "25k",
+   "at": "2026-11-04T08:43:24.468Z",
+   "rootKind": "picked"
+  },
+  "entries": {
+   "checks": [
+    {
+     "name": "nested empty directory a/b/c is enumerable",
+     "ok": true
+    },
+    {
+     "name": "CRLF, lone CR, BOM, NUL, empty, invalid UTF-8 round-trip byte-exact",
+     "ok": true
+    },
+    {
+     "name": "case-insensitive volume (Case.txt vs case.txt are one entry)",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "listing after creating Case.txt then case.txt",
+     "ok": null,
+     "detail": "[\"Case.txt\"]"
+    },
+    {
+     "name": "NFC vs NFD names are one entry on this volume",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "names stored (code points)",
+     "ok": null,
+     "detail": "[\"63 61 66 e9 2e 74 78 74\"]"
+    },
+    {
+     "name": "creating NFD sibling",
+     "ok": null,
+     "detail": "ok"
+    },
+    {
+     "name": "name probes (what each platform accepts; informs the portable path policy)",
+     "ok": null,
+     "detail": "{\"\\\"..\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\".\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"a/b\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"a\\\\\\\\b\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"CON\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"con.txt\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"NUL\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"aux.log\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"LPT1\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"trailing.\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"trailing \\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\" leading\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"colon:name\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"q?mark\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"star*\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"lt<gt>\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"pipe|\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"quote\\\\\\\"\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"tab\\\\tname\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"nul\\\\u0000char\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"xxxxxxxx\u2026(255)\\\"\":\"InvalidStateError: An operation that depends on state cached in an interface object was made but the state had changed since it was read from disk.\",\"\\\"xxxxxxxx\u2026(256)\\\"\":\"InvalidStateError: An operation that depends on state cached in an interface object was made but the state had changed since it was read from disk.\",\"\\\"\ud83d\ude42.txt\\\"\":\"created\",\"\\\".git\\\"\":\"created\",\"\\\".GIT\\\"\":\"created\"}"
+    },
+    {
+     "name": "nested directory depth reached (cap 200 levels, ~13 chars each)",
+     "ok": null,
+     "detail": "{\"depth\":75,\"stoppedBy\":\"InvalidStateError: An operation that depends on state cached in an interface object was made but the state had changed since it was read from disk.\"}"
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "caseInsensitiveFilesystem": true,
+    "unicodeNormalizationFolds": true,
+    "nameProbes": {
+     "\"..\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\".\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"a/b\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"a\\\\b\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"CON\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"con.txt\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"NUL\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"aux.log\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"LPT1\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"trailing.\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"trailing \"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\" leading\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"colon:name\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"q?mark\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"star*\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"lt<gt>\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"pipe|\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"quote\\\"\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"tab\\tname\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"nul\\u0000char\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"xxxxxxxx\u2026(255)\"": "InvalidStateError: An operation that depends on state cached in an interface object was made but the state had changed since it was read from disk.",
+     "\"xxxxxxxx\u2026(256)\"": "InvalidStateError: An operation that depends on state cached in an interface object was made but the state had changed since it was read from disk.",
+     "\"\ud83d\ude42.txt\"": "created",
+     "\".git\"": "created",
+     "\".GIT\"": "created"
+    },
+    "maxDepthReached": 75
+   },
+   "durationMs": 360,
+   "id": "entries",
+   "scenario": "entries-rerun.",
+   "at": "2026-11-04T08:47:56.478Z",
+   "rootKind": "picked"
+  },
+  "identity-other": {
+   "checks": [
+    {
+     "name": "isSameEntry(root, other)",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "root.resolve(other) (other is inside root)",
+     "ok": null,
+     "detail": "[]"
+    },
+    {
+     "name": "other.resolve(root) (root is inside other)",
+     "ok": null,
+     "detail": "[]"
+    },
+    {
+     "name": "relationship",
+     "ok": null,
+     "detail": "identical"
+    }
+   ],
+   "status": "info",
+   "durationMs": 2471.900000035763,
+   "id": "identity-other",
+   "scenario": "entries-rerun.",
+   "at": "2026-11-04T08:48:40.356Z",
+   "rootKind": "picked"
+  },
+  "race": {
+   "checks": [
+    {
+     "name": "injector detected",
+     "ok": null,
+     "detail": "{\"marker\":\"probe@457310.39999997616\",\"mode\":\"append\",\"at\":\"2026-11-04T08:49:10.366Z\",\"ok\":true,\"durationMs\":0.280792}"
+    },
+    {
+     "name": "recheck immediately before mutation detects the external edit (hash differs)",
+     "ok": true,
+     "detail": "9660b330 -> 98359c38"
+    },
+    {
+     "name": "does size or lastModified alone reveal it? (cache optimisations must not rely on these)",
+     "ok": null,
+     "detail": "{\"sizeChanged\":true,\"lastModifiedChanged\":true}"
+    },
+    {
+     "name": "final recheck passes while nothing changed",
+     "ok": true
+    },
+    {
+     "name": "Phase B outcome (external edit between recheck and write)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST (replacement overwrote it)"
+    },
+    {
+     "name": "Phase C injector result (an error here, e.g. sharing violation, means the OS protected the file)",
+     "ok": null,
+     "detail": "{\"marker\":\"C-during@457676.09999996424\",\"mode\":\"append\",\"at\":\"2026-11-04T08:49:10.618Z\",\"ok\":true,\"durationMs\":0.252167}"
+    },
+    {
+     "name": "Phase C writable close()",
+     "ok": null,
+     "detail": "ok"
+    },
+    {
+     "name": "Phase C outcome (external edit during replacement)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST"
+    },
+    {
+     "name": "exposure window recheck\u2192close, ms (this is the race window users must be warned about)",
+     "ok": null,
+     "detail": "{\"4 KiB\":{\"p50\":68.1,\"max\":75.3},\"1 MiB\":{\"p50\":72.9,\"max\":117.2},\"10 MiB\":{\"p50\":95.5,\"max\":133.6}}"
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "injectorMode": "append",
+    "phaseA": {
+     "injectorAck": {
+      "marker": "A-before@457489.2999999523",
+      "mode": "append",
+      "at": "2026-11-04T08:49:10.449Z",
+      "ok": true,
+      "durationMs": 0.195375
+     },
+     "planned": {
+      "size": 9,
+      "lastModified": 1793782150373,
+      "hash": "9660b3303631e95817f72c7536939f0eca9e20c0d7b86382a39e4a98a1b26151"
+     },
+     "now": {
+      "size": 66,
+      "lastModified": 1793782150449,
+      "hash": "98359c38eb432a5369a563726d3d8cde380e923f3285bc4e87f180b9480fbcd1"
+     }
+    },
+    "phaseB": {
+     "injectorAck": {
+      "marker": "B-after-recheck@457604",
+      "mode": "append",
+      "at": "2026-11-04T08:49:10.549Z",
+      "ok": true,
+      "durationMs": 0.199791
+     },
+     "finalContent": "REPLACEMENT-B\n"
+    },
+    "phaseC": {
+     "injectorAck": {
+      "marker": "C-during@457676.09999996424",
+      "mode": "append",
+      "at": "2026-11-04T08:49:10.618Z",
+      "ok": true,
+      "durationMs": 0.252167
+     },
+     "close": "ok",
+     "finalSize": 4194304,
+     "startsWithExternal": false
+    },
+    "windowMs": {
+     "4 KiB": {
+      "p50": 68.1,
+      "max": 75.3
+     },
+     "1 MiB": {
+      "p50": 72.9,
+      "max": 117.2
+     },
+     "10 MiB": {
+      "p50": 95.5,
+      "max": 133.6
+     }
+    }
+   },
+   "durationMs": 3818.900000035763,
+   "id": "race",
+   "scenario": "race-append",
+   "at": "2026-11-04T08:49:14.007Z",
+   "rootKind": "picked"
+  }
+ },
+ "history": [
+  {
+   "checks": [
+    {
+     "name": "stored handle",
+     "ok": null,
+     "detail": "none (expected after clearing site data: fresh enrollment)"
+    }
+   ],
+   "status": "info",
+   "durationMs": 3,
+   "id": "handle-reload",
+   "scenario": "after-clear",
+   "at": "2026-11-04T08:37:54.105Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":164,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":232,\"totalMs\":232,\"timeToFirstProgressMs\":8,\"filesPerSec\":4314,\"mibPerSec\":18,\"heapPeakGrowth\":\"489.8 KiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "8 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":190}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.9000000357627869,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 163.80000001192093,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 163.9000000357628,
+     "heapBaseBytes": 1262726,
+     "heapPeakBytes": 2215138,
+     "heapPeakGrowthBytes": 952412,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 6101,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.699999988079071,
+     "timeToFirstProgressMs": 7.5,
+     "enumerationDoneMs": 231.69999998807907,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 231.79999995231628,
+     "heapBaseBytes": 2215138,
+     "heapPeakBytes": 2716714,
+     "heapPeakGrowthBytes": 501576,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4314,
+     "mibPerSec": 18
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1,
+     "timeToFirstProgressMs": 10,
+     "enumerationDoneMs": 190.30000001192093,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 190.30000001192093,
+     "heapBaseBytes": 2265974,
+     "heapPeakBytes": 3900672,
+     "heapPeakGrowthBytes": 1634698,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5255,
+     "mibPerSec": 22
+    }
+   },
+   "durationMs": 593,
+   "id": "perf",
+   "scenario": "1k (labelled 10k, folder was 1k)",
+   "at": "2026-11-04T08:38:32.116Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":187,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":186,\"totalMs\":186,\"timeToFirstProgressMs\":5,\"filesPerSec\":5371,\"mibPerSec\":22,\"heapPeakGrowth\":\"2.0 MiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":191}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 1.4000000357627869,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 186.70000004768372,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 186.70000004768372,
+     "heapBaseBytes": 3367513,
+     "heapPeakBytes": 3911365,
+     "heapPeakGrowthBytes": 543852,
+     "maxMainThreadLagMs": 8,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5356,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.699999988079071,
+     "timeToFirstProgressMs": 4.899999976158142,
+     "enumerationDoneMs": 186.19999998807907,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 186.19999998807907,
+     "heapBaseBytes": 1762480,
+     "heapPeakBytes": 3867977,
+     "heapPeakGrowthBytes": 2105497,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5371,
+     "mibPerSec": 22
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1,
+     "timeToFirstProgressMs": 8.099999964237213,
+     "enumerationDoneMs": 191,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 191,
+     "heapBaseBytes": 2729283,
+     "heapPeakBytes": 3966711,
+     "heapPeakGrowthBytes": 1237428,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5236,
+     "mibPerSec": 21
+    }
+   },
+   "durationMs": 568.5,
+   "id": "perf",
+   "scenario": "1k (labelled 10k, folder was 1k)",
+   "at": "2026-11-04T08:38:33.758Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":200,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":187,\"totalMs\":187,\"timeToFirstProgressMs\":5,\"filesPerSec\":5356,\"mibPerSec\":22,\"heapPeakGrowth\":\"2.1 MiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":193}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 1.4000000357627869,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 200.4000000357628,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 200.4000000357628,
+     "heapBaseBytes": 4852277,
+     "heapPeakBytes": 5297933,
+     "heapPeakGrowthBytes": 445656,
+     "maxMainThreadLagMs": 3,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4990,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.800000011920929,
+     "timeToFirstProgressMs": 5.100000023841858,
+     "enumerationDoneMs": 186.70000004768372,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 186.70000004768372,
+     "heapBaseBytes": 2334601,
+     "heapPeakBytes": 4584683,
+     "heapPeakGrowthBytes": 2250082,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5356,
+     "mibPerSec": 22
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1.0999999642372131,
+     "timeToFirstProgressMs": 8.199999988079071,
+     "enumerationDoneMs": 193.0999999642372,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 193.29999995231628,
+     "heapBaseBytes": 3390015,
+     "heapPeakBytes": 4800579,
+     "heapPeakGrowthBytes": 1410564,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5173,
+     "mibPerSec": 21
+    }
+   },
+   "durationMs": 584.2999999523163,
+   "id": "perf",
+   "scenario": "1k (labelled 10k, folder was 1k)",
+   "at": "2026-11-04T08:38:35.107Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":164,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":187,\"totalMs\":187,\"timeToFirstProgressMs\":6,\"filesPerSec\":5362,\"mibPerSec\":22,\"heapPeakGrowth\":\"997.4 KiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "6 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":210}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.5,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 163.60000002384186,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 163.60000002384186,
+     "heapBaseBytes": 1524648,
+     "heapPeakBytes": 3190063,
+     "heapPeakGrowthBytes": 1665415,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 6112,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.699999988079071,
+     "timeToFirstProgressMs": 5.699999988079071,
+     "enumerationDoneMs": 186.5,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 186.5,
+     "heapBaseBytes": 3190063,
+     "heapPeakBytes": 4211450,
+     "heapPeakGrowthBytes": 1021387,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5362,
+     "mibPerSec": 22
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1.100000023841858,
+     "timeToFirstProgressMs": 8.399999976158142,
+     "enumerationDoneMs": 210.10000002384186,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 210.10000002384186,
+     "heapBaseBytes": 4157970,
+     "heapPeakBytes": 5362438,
+     "heapPeakGrowthBytes": 1204468,
+     "maxMainThreadLagMs": 1,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4760,
+     "mibPerSec": 20
+    }
+   },
+   "durationMs": 562.5999999642372,
+   "id": "perf",
+   "scenario": "1k (labelled 25k, folder was 1k)",
+   "at": "2026-11-04T08:38:53.193Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":164,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":208,\"totalMs\":208,\"timeToFirstProgressMs\":5,\"filesPerSec\":4817,\"mibPerSec\":20,\"heapPeakGrowth\":\"2.1 MiB\",\"maxMainThreadLagMs\":0}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":196}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.6000000238418579,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 163.60000002384186,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 163.60000002384186,
+     "heapBaseBytes": 4227796,
+     "heapPeakBytes": 4721744,
+     "heapPeakGrowthBytes": 493948,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 6112,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.699999988079071,
+     "timeToFirstProgressMs": 5.199999988079071,
+     "enumerationDoneMs": 207.60000002384186,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 207.60000002384186,
+     "heapBaseBytes": 3094236,
+     "heapPeakBytes": 5328388,
+     "heapPeakGrowthBytes": 2234152,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4817,
+     "mibPerSec": 20
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1,
+     "timeToFirstProgressMs": 14.100000023841858,
+     "enumerationDoneMs": 196.30000001192093,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 196.30000001192093,
+     "heapBaseBytes": 2115575,
+     "heapPeakBytes": 4252994,
+     "heapPeakGrowthBytes": 2137419,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5094,
+     "mibPerSec": 21
+    }
+   },
+   "durationMs": 569.8999999761581,
+   "id": "perf",
+   "scenario": "1k (labelled 25k, folder was 1k)",
+   "at": "2026-11-04T08:38:54.596Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":1000,\"includedBytes\":4301107,\"emptyDirs\":3,\"excludedFiles\":2002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":1000,\"dirs\":1224,\"prunedDirs\":6,\"ms\":163,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":1000,\"bytes\":\"4.1 MiB\",\"enumerationMs\":211,\"totalMs\":211,\"timeToFirstProgressMs\":5,\"filesPerSec\":4744,\"mibPerSec\":19,\"heapPeakGrowth\":\"816.8 KiB\",\"maxMainThreadLagMs\":5}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":1000,\"hashed\":1000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=2002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":\"run finished before cancel: use a larger fixture or smaller delay\",\"filesHashedBeforeCancel\":1000,\"totalMs\":193}"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 1.2999999523162842,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 163.29999995231628,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 163.29999995231628,
+     "heapBaseBytes": 3249868,
+     "heapPeakBytes": 4593812,
+     "heapPeakGrowthBytes": 1343944,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 6124,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 0.8999999761581421,
+     "timeToFirstProgressMs": 4.899999976158142,
+     "enumerationDoneMs": 210.80000001192093,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 210.80000001192093,
+     "heapBaseBytes": 4593812,
+     "heapPeakBytes": 5430196,
+     "heapPeakGrowthBytes": 836384,
+     "maxMainThreadLagMs": 5,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4744,
+     "mibPerSec": 19
+    },
+    "cancel": {
+     "files": 1000,
+     "dirs": 1224,
+     "prunedDirs": 6,
+     "bytes": 4301107,
+     "timeToFirstEntryMs": 1,
+     "timeToFirstProgressMs": 9.399999976158142,
+     "enumerationDoneMs": 192.60000002384186,
+     "hashedFiles": 1000,
+     "errors": [],
+     "totalMs": 192.60000002384186,
+     "heapBaseBytes": 4326660,
+     "heapPeakBytes": 7460726,
+     "heapPeakGrowthBytes": 3134066,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5192,
+     "mibPerSec": 21
+    }
+   },
+   "durationMs": 571,
+   "id": "perf",
+   "scenario": "1k (labelled 25k, folder was 1k)",
+   "at": "2026-11-04T08:38:56.031Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":10000,\"includedBytes\":38331041,\"emptyDirs\":3,\"excludedFiles\":20002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":10000,\"dirs\":9772,\"prunedDirs\":6,\"ms\":1469,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":10000,\"bytes\":\"36.6 MiB\",\"enumerationMs\":1729,\"totalMs\":1729,\"timeToFirstProgressMs\":6,\"filesPerSec\":5784,\"mibPerSec\":21,\"heapPeakGrowth\":\"5.4 MiB\",\"maxMainThreadLagMs\":1}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":10000,\"hashed\":10000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=20002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "6 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":2,\"filesHashedBeforeCancel\":1067,\"totalMs\":400}"
+    },
+    {
+     "name": "cancellation returns all workers to idle promptly (< 500 ms)",
+     "ok": true,
+     "detail": "2 ms"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 10000,
+     "dirs": 9772,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.5999999642372131,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 1469.199999988079,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 1469.300000011921,
+     "heapBaseBytes": 3968618,
+     "heapPeakBytes": 7425842,
+     "heapPeakGrowthBytes": 3457224,
+     "maxMainThreadLagMs": 18,
+     "cancelLatencyMs": null,
+     "filesPerSec": 6806,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 10000,
+     "dirs": 9772,
+     "prunedDirs": 6,
+     "bytes": 38331041,
+     "timeToFirstEntryMs": 0.7000000476837158,
+     "timeToFirstProgressMs": 5.600000023841858,
+     "enumerationDoneMs": 1728.7000000476837,
+     "hashedFiles": 10000,
+     "errors": [],
+     "totalMs": 1728.800000011921,
+     "heapBaseBytes": 5647208,
+     "heapPeakBytes": 11330444,
+     "heapPeakGrowthBytes": 5683236,
+     "maxMainThreadLagMs": 1,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5784,
+     "mibPerSec": 21
+    },
+    "cancel": {
+     "files": 1067,
+     "dirs": 1047,
+     "prunedDirs": 5,
+     "bytes": 4613140,
+     "timeToFirstEntryMs": 10.300000011920929,
+     "timeToFirstProgressMs": 150.5,
+     "enumerationDoneMs": 400.30000001192093,
+     "hashedFiles": 1067,
+     "errors": [],
+     "totalMs": 400.30000001192093,
+     "heapBaseBytes": 8048207,
+     "heapPeakBytes": 11809882,
+     "heapPeakGrowthBytes": 3761675,
+     "maxMainThreadLagMs": 10,
+     "cancelLatencyMs": 2.400000035762787,
+     "filesPerSec": 2666,
+     "mibPerSec": 11
+    }
+   },
+   "durationMs": 3612.699999988079,
+   "id": "perf",
+   "scenario": "10k",
+   "at": "2026-11-04T08:42:06.784Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":10000,\"includedBytes\":38331041,\"emptyDirs\":3,\"excludedFiles\":20002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":10000,\"dirs\":9772,\"prunedDirs\":6,\"ms\":1414,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":10000,\"bytes\":\"36.6 MiB\",\"enumerationMs\":1804,\"totalMs\":1804,\"timeToFirstProgressMs\":5,\"filesPerSec\":5544,\"mibPerSec\":20,\"heapPeakGrowth\":\"4.8 MiB\",\"maxMainThreadLagMs\":22}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":10000,\"hashed\":10000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=20002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":0,\"filesHashedBeforeCancel\":1086,\"totalMs\":400}"
+    },
+    {
+     "name": "cancellation returns all workers to idle promptly (< 500 ms)",
+     "ok": true,
+     "detail": "0 ms"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 10000,
+     "dirs": 9772,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.800000011920929,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 1413.699999988079,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 1413.699999988079,
+     "heapBaseBytes": 8557827,
+     "heapPeakBytes": 13653349,
+     "heapPeakGrowthBytes": 5095522,
+     "maxMainThreadLagMs": 7,
+     "cancelLatencyMs": null,
+     "filesPerSec": 7074,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 10000,
+     "dirs": 9772,
+     "prunedDirs": 6,
+     "bytes": 38331041,
+     "timeToFirstEntryMs": 0.800000011920929,
+     "timeToFirstProgressMs": 5,
+     "enumerationDoneMs": 1803.800000011921,
+     "hashedFiles": 10000,
+     "errors": [],
+     "totalMs": 1803.9000000357628,
+     "heapBaseBytes": 13653349,
+     "heapPeakBytes": 18637761,
+     "heapPeakGrowthBytes": 4984412,
+     "maxMainThreadLagMs": 22,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5544,
+     "mibPerSec": 20
+    },
+    "cancel": {
+     "files": 1086,
+     "dirs": 1066,
+     "prunedDirs": 5,
+     "bytes": 4667684,
+     "timeToFirstEntryMs": 7.300000011920929,
+     "timeToFirstProgressMs": 144.19999998807907,
+     "enumerationDoneMs": 400.10000002384186,
+     "hashedFiles": 1086,
+     "errors": [],
+     "totalMs": 400.10000002384186,
+     "heapBaseBytes": 11319624,
+     "heapPeakBytes": 11875722,
+     "heapPeakGrowthBytes": 556098,
+     "maxMainThreadLagMs": 20,
+     "cancelLatencyMs": 0,
+     "filesPerSec": 2714,
+     "mibPerSec": 11
+    }
+   },
+   "durationMs": 3628.2999999523163,
+   "id": "perf",
+   "scenario": "10k",
+   "at": "2026-11-04T08:42:11.141Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":10000,\"includedBytes\":38331041,\"emptyDirs\":3,\"excludedFiles\":20002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":10000,\"dirs\":9772,\"prunedDirs\":6,\"ms\":1439,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":10000,\"bytes\":\"36.6 MiB\",\"enumerationMs\":1738,\"totalMs\":1738,\"timeToFirstProgressMs\":6,\"filesPerSec\":5755,\"mibPerSec\":21,\"heapPeakGrowth\":\"8.6 MiB\",\"maxMainThreadLagMs\":21}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":10000,\"hashed\":10000,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=20002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "6 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":0,\"filesHashedBeforeCancel\":1017,\"totalMs\":400}"
+    },
+    {
+     "name": "cancellation returns all workers to idle promptly (< 500 ms)",
+     "ok": true,
+     "detail": "0 ms"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 10000,
+     "dirs": 9772,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.9000000357627869,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 1438.9000000357628,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 1438.9000000357628,
+     "heapBaseBytes": 9683083,
+     "heapPeakBytes": 18516167,
+     "heapPeakGrowthBytes": 8833084,
+     "maxMainThreadLagMs": 15,
+     "cancelLatencyMs": null,
+     "filesPerSec": 6950,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 10000,
+     "dirs": 9772,
+     "prunedDirs": 6,
+     "bytes": 38331041,
+     "timeToFirstEntryMs": 0.800000011920929,
+     "timeToFirstProgressMs": 5.800000011920929,
+     "enumerationDoneMs": 1737.5,
+     "hashedFiles": 10000,
+     "errors": [],
+     "totalMs": 1737.5,
+     "heapBaseBytes": 8873729,
+     "heapPeakBytes": 17943095,
+     "heapPeakGrowthBytes": 9069366,
+     "maxMainThreadLagMs": 21,
+     "cancelLatencyMs": null,
+     "filesPerSec": 5755,
+     "mibPerSec": 21
+    },
+    "cancel": {
+     "files": 1017,
+     "dirs": 998,
+     "prunedDirs": 5,
+     "bytes": 4374321,
+     "timeToFirstEntryMs": 5.899999976158142,
+     "timeToFirstProgressMs": 151.39999997615814,
+     "enumerationDoneMs": 400.19999998807907,
+     "hashedFiles": 1017,
+     "errors": [],
+     "totalMs": 400.39999997615814,
+     "heapBaseBytes": 8098341,
+     "heapPeakBytes": 12394379,
+     "heapPeakGrowthBytes": 4296038,
+     "maxMainThreadLagMs": 32,
+     "cancelLatencyMs": 0,
+     "filesPerSec": 2540,
+     "mibPerSec": 10
+    }
+   },
+   "durationMs": 3588.399999976158,
+   "id": "perf",
+   "scenario": "10k",
+   "at": "2026-11-04T08:42:15.364Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":25000,\"includedBytes\":1073741824,\"emptyDirs\":3,\"excludedFiles\":50002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":25002,\"dirs\":16345,\"prunedDirs\":6,\"ms\":2850,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":25002,\"bytes\":\"1.2 GiB\",\"enumerationMs\":5736,\"totalMs\":5737,\"timeToFirstProgressMs\":6,\"filesPerSec\":4358,\"mibPerSec\":213,\"heapPeakGrowth\":\"7.9 MiB\",\"maxMainThreadLagMs\":16}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":25002,\"hashed\":25002,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=50002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "6 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":2,\"filesHashedBeforeCancel\":2183,\"totalMs\":401}"
+    },
+    {
+     "name": "cancellation returns all workers to idle promptly (< 500 ms)",
+     "ok": true,
+     "detail": "2 ms"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 25002,
+     "dirs": 16345,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.5999999642372131,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 2850.399999976158,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 2850.399999976158,
+     "heapBaseBytes": 8507962,
+     "heapPeakBytes": 11912176,
+     "heapPeakGrowthBytes": 3404214,
+     "maxMainThreadLagMs": 18,
+     "cancelLatencyMs": null,
+     "filesPerSec": 8771,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 25002,
+     "dirs": 16345,
+     "prunedDirs": 6,
+     "bytes": 1283457025,
+     "timeToFirstEntryMs": 1,
+     "timeToFirstProgressMs": 5.599999964237213,
+     "enumerationDoneMs": 5735.699999988079,
+     "hashedFiles": 25002,
+     "errors": [],
+     "totalMs": 5736.799999952316,
+     "heapBaseBytes": 10598948,
+     "heapPeakBytes": 18844690,
+     "heapPeakGrowthBytes": 8245742,
+     "maxMainThreadLagMs": 16,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4358,
+     "mibPerSec": 213
+    },
+    "cancel": {
+     "files": 2190,
+     "dirs": 1436,
+     "prunedDirs": 5,
+     "bytes": 91725177,
+     "timeToFirstEntryMs": 11.600000023841858,
+     "timeToFirstProgressMs": 21.700000047683716,
+     "enumerationDoneMs": 400.2000000476837,
+     "hashedFiles": 2183,
+     "errors": [],
+     "totalMs": 400.5,
+     "heapBaseBytes": 9545378,
+     "heapPeakBytes": 21071758,
+     "heapPeakGrowthBytes": 11526380,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": 2.399999976158142,
+     "filesPerSec": 5468,
+     "mibPerSec": 218
+    }
+   },
+   "durationMs": 9009.5,
+   "id": "perf",
+   "scenario": "25k",
+   "at": "2026-11-04T08:42:41.297Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":25000,\"includedBytes\":1073741824,\"emptyDirs\":3,\"excludedFiles\":50002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":25002,\"dirs\":16345,\"prunedDirs\":6,\"ms\":2765,\"timeToFirstEntryMs\":2}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":25002,\"bytes\":\"1.2 GiB\",\"enumerationMs\":5321,\"totalMs\":5322,\"timeToFirstProgressMs\":6,\"filesPerSec\":4698,\"mibPerSec\":230,\"heapPeakGrowth\":\"7.8 MiB\",\"maxMainThreadLagMs\":11}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":25002,\"hashed\":25002,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=50002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "6 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":3,\"filesHashedBeforeCancel\":2400,\"totalMs\":426}"
+    },
+    {
+     "name": "cancellation returns all workers to idle promptly (< 500 ms)",
+     "ok": true,
+     "detail": "3 ms"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 25002,
+     "dirs": 16345,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 1.699999988079071,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 2765.400000035763,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 2765.400000035763,
+     "heapBaseBytes": 29000658,
+     "heapPeakBytes": 29000658,
+     "heapPeakGrowthBytes": 0,
+     "maxMainThreadLagMs": 14,
+     "cancelLatencyMs": null,
+     "filesPerSec": 9041,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 25002,
+     "dirs": 16345,
+     "prunedDirs": 6,
+     "bytes": 1283457025,
+     "timeToFirstEntryMs": 0.800000011920929,
+     "timeToFirstProgressMs": 5.800000011920929,
+     "enumerationDoneMs": 5321.400000035763,
+     "hashedFiles": 25002,
+     "errors": [],
+     "totalMs": 5322.100000023842,
+     "heapBaseBytes": 9742345,
+     "heapPeakBytes": 17927577,
+     "heapPeakGrowthBytes": 8185232,
+     "maxMainThreadLagMs": 11,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4698,
+     "mibPerSec": 230
+    },
+    "cancel": {
+     "files": 2400,
+     "dirs": 1575,
+     "prunedDirs": 5,
+     "bytes": 101022478,
+     "timeToFirstEntryMs": 12.300000011920929,
+     "timeToFirstProgressMs": 20.100000023841858,
+     "enumerationDoneMs": 419,
+     "hashedFiles": 2400,
+     "errors": [],
+     "totalMs": 425.5,
+     "heapBaseBytes": 11511363,
+     "heapPeakBytes": 22359040,
+     "heapPeakGrowthBytes": 10847677,
+     "maxMainThreadLagMs": 16,
+     "cancelLatencyMs": 2.5,
+     "filesPerSec": 5640,
+     "mibPerSec": 226
+    }
+   },
+   "durationMs": 8527.600000023842,
+   "id": "perf",
+   "scenario": "25k",
+   "at": "2026-11-04T08:42:53.648Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "fixture manifest",
+     "ok": null,
+     "detail": "{\"includedFiles\":25000,\"includedBytes\":1073741824,\"emptyDirs\":3,\"excludedFiles\":50002,\"prunedDirNames\":[\"node_modules\",\"build\",\"target\",\".gradle\",\".git\",\"dist\"]}"
+    },
+    {
+     "name": "names-only enumeration",
+     "ok": null,
+     "detail": "{\"files\":25002,\"dirs\":16345,\"prunedDirs\":6,\"ms\":2768,\"timeToFirstEntryMs\":1}"
+    },
+    {
+     "name": "full run (enumerate + getFile + hash)",
+     "ok": null,
+     "detail": "{\"files\":25002,\"bytes\":\"1.2 GiB\",\"enumerationMs\":5445,\"totalMs\":5446,\"timeToFirstProgressMs\":5,\"filesPerSec\":4591,\"mibPerSec\":225,\"heapPeakGrowth\":\"8.5 MiB\",\"maxMainThreadLagMs\":12}"
+    },
+    {
+     "name": "no read/enumeration errors",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "every included file hashed, hash equals generator manifest",
+     "ok": true,
+     "detail": "{\"expected\":25002,\"hashed\":25002,\"mismatch\":0,\"missing\":0,\"extra\":0}"
+    },
+    {
+     "name": "excluded trees were pruned, never hashed (hashed count excludes them)",
+     "ok": true,
+     "detail": "prunedDirs=6, excludedFilesInFixture=50002"
+    },
+    {
+     "name": "time to first progress (budget input)",
+     "ok": null,
+     "detail": "5 ms"
+    },
+    {
+     "name": "cancel at 400 ms",
+     "ok": null,
+     "detail": "{\"cancelLatencyMs\":3,\"filesHashedBeforeCancel\":2453,\"totalMs\":401}"
+    },
+    {
+     "name": "cancellation returns all workers to idle promptly (< 500 ms)",
+     "ok": true,
+     "detail": "3 ms"
+    },
+    {
+     "name": "cancelled run produced no errors",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "config": {
+     "pruned": [
+      "node_modules",
+      "build",
+      "target",
+      ".gradle",
+      ".git",
+      "dist"
+     ],
+     "poolSize": 4,
+     "chunkSize": 1048576,
+     "mode": "slice",
+     "enumConcurrency": 1
+    },
+    "namesOnly": {
+     "files": 25002,
+     "dirs": 16345,
+     "prunedDirs": 6,
+     "bytes": 0,
+     "timeToFirstEntryMs": 0.699999988079071,
+     "timeToFirstProgressMs": null,
+     "enumerationDoneMs": 2767.699999988079,
+     "hashedFiles": 0,
+     "errors": [],
+     "totalMs": 2767.699999988079,
+     "heapBaseBytes": 8956262,
+     "heapPeakBytes": 12601576,
+     "heapPeakGrowthBytes": 3645314,
+     "maxMainThreadLagMs": 20,
+     "cancelLatencyMs": null,
+     "filesPerSec": 9033,
+     "mibPerSec": 0
+    },
+    "full": {
+     "files": 25002,
+     "dirs": 16345,
+     "prunedDirs": 6,
+     "bytes": 1283457025,
+     "timeToFirstEntryMs": 0.8999999761581421,
+     "timeToFirstProgressMs": 5.099999964237213,
+     "enumerationDoneMs": 5445.099999964237,
+     "hashedFiles": 25002,
+     "errors": [],
+     "totalMs": 5445.899999976158,
+     "heapBaseBytes": 9127320,
+     "heapPeakBytes": 18088720,
+     "heapPeakGrowthBytes": 8961400,
+     "maxMainThreadLagMs": 12,
+     "cancelLatencyMs": null,
+     "filesPerSec": 4591,
+     "mibPerSec": 225
+    },
+    "cancel": {
+     "files": 2457,
+     "dirs": 1611,
+     "prunedDirs": 5,
+     "bytes": 103274911,
+     "timeToFirstEntryMs": 3.799999952316284,
+     "timeToFirstProgressMs": 8.599999964237213,
+     "enumerationDoneMs": 400.0999999642372,
+     "hashedFiles": 2453,
+     "errors": [],
+     "totalMs": 400.69999998807907,
+     "heapBaseBytes": 16681717,
+     "heapPeakBytes": 23201037,
+     "heapPeakGrowthBytes": 6519320,
+     "maxMainThreadLagMs": 0,
+     "cancelLatencyMs": 3,
+     "filesPerSec": 6132,
+     "mibPerSec": 246
+    }
+   },
+   "durationMs": 8634.699999988079,
+   "id": "perf",
+   "scenario": "25k",
+   "at": "2026-11-04T08:43:24.468Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "nested empty directory a/b/c is enumerable",
+     "ok": true
+    },
+    {
+     "name": "CRLF, lone CR, BOM, NUL, empty, invalid UTF-8 round-trip byte-exact",
+     "ok": true
+    },
+    {
+     "name": "case-insensitive volume (Case.txt vs case.txt are one entry)",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "listing after creating Case.txt then case.txt",
+     "ok": null,
+     "detail": "[\"Case.txt\"]"
+    },
+    {
+     "name": "NFC vs NFD names are one entry on this volume",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "names stored (code points)",
+     "ok": null,
+     "detail": "[\"63 61 66 e9 2e 74 78 74\"]"
+    },
+    {
+     "name": "creating NFD sibling",
+     "ok": null,
+     "detail": "ok"
+    },
+    {
+     "name": "name probes (what each platform accepts; informs the portable path policy)",
+     "ok": null,
+     "detail": "{\"\\\"..\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\".\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"a/b\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"a\\\\\\\\b\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"CON\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"con.txt\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"NUL\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"aux.log\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"LPT1\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"trailing.\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"trailing \\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\" leading\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"colon:name\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"q?mark\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"star*\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"lt<gt>\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"pipe|\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"quote\\\\\\\"\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"tab\\\\tname\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"nul\\\\u0000char\\\"\":\"TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.\",\"\\\"xxxxxxxx\u2026(255)\\\"\":\"InvalidStateError: An operation that depends on state cached in an interface object was made but the state had changed since it was read from disk.\",\"\\\"xxxxxxxx\u2026(256)\\\"\":\"InvalidStateError: An operation that depends on state cached in an interface object was made but the state had changed since it was read from disk.\",\"\\\"\ud83d\ude42.txt\\\"\":\"created\",\"\\\".git\\\"\":\"created\",\"\\\".GIT\\\"\":\"created\"}"
+    },
+    {
+     "name": "nested directory depth reached (cap 200 levels, ~13 chars each)",
+     "ok": null,
+     "detail": "{\"depth\":75,\"stoppedBy\":\"InvalidStateError: An operation that depends on state cached in an interface object was made but the state had changed since it was read from disk.\"}"
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "caseInsensitiveFilesystem": true,
+    "unicodeNormalizationFolds": true,
+    "nameProbes": {
+     "\"..\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\".\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"a/b\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"a\\\\b\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"CON\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"con.txt\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"NUL\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"aux.log\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"LPT1\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"trailing.\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"trailing \"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\" leading\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"colon:name\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"q?mark\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"star*\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"lt<gt>\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"pipe|\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"quote\\\"\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"tab\\tname\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"nul\\u0000char\"": "TypeError: Failed to execute 'getFileHandle' on 'FileSystemDirectoryHandle': Name is not allowed.",
+     "\"xxxxxxxx\u2026(255)\"": "InvalidStateError: An operation that depends on state cached in an interface object was made but the state had changed since it was read from disk.",
+     "\"xxxxxxxx\u2026(256)\"": "InvalidStateError: An operation that depends on state cached in an interface object was made but the state had changed since it was read from disk.",
+     "\"\ud83d\ude42.txt\"": "created",
+     "\".git\"": "created",
+     "\".GIT\"": "created"
+    },
+    "maxDepthReached": 75
+   },
+   "durationMs": 360,
+   "id": "entries",
+   "scenario": "entries-rerun.",
+   "at": "2026-11-04T08:47:56.478Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "isSameEntry(root, other)",
+     "ok": null,
+     "detail": "false"
+    },
+    {
+     "name": "root.resolve(other) (other is inside root)",
+     "ok": null,
+     "detail": "[\"__harness_scratch__\"]"
+    },
+    {
+     "name": "other.resolve(root) (root is inside other)",
+     "ok": null,
+     "detail": "null"
+    },
+    {
+     "name": "relationship",
+     "ok": null,
+     "detail": "other is a descendant of root"
+    }
+   ],
+   "status": "info",
+   "durationMs": 3048.699999988079,
+   "id": "identity-other",
+   "scenario": "entries-rerun.",
+   "at": "2026-11-04T08:48:30.425Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "isSameEntry(root, other)",
+     "ok": null,
+     "detail": "false"
+    },
+    {
+     "name": "root.resolve(other) (other is inside root)",
+     "ok": null,
+     "detail": "null"
+    },
+    {
+     "name": "other.resolve(root) (root is inside other)",
+     "ok": null,
+     "detail": "[\"1k\"]"
+    },
+    {
+     "name": "relationship",
+     "ok": null,
+     "detail": "other is an ancestor of root"
+    }
+   ],
+   "status": "info",
+   "durationMs": 4915.099999964237,
+   "id": "identity-other",
+   "scenario": "entries-rerun.",
+   "at": "2026-11-04T08:48:36.187Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "isSameEntry(root, other)",
+     "ok": null,
+     "detail": "true"
+    },
+    {
+     "name": "root.resolve(other) (other is inside root)",
+     "ok": null,
+     "detail": "[]"
+    },
+    {
+     "name": "other.resolve(root) (root is inside other)",
+     "ok": null,
+     "detail": "[]"
+    },
+    {
+     "name": "relationship",
+     "ok": null,
+     "detail": "identical"
+    }
+   ],
+   "status": "info",
+   "durationMs": 2471.900000035763,
+   "id": "identity-other",
+   "scenario": "entries-rerun.",
+   "at": "2026-11-04T08:48:40.356Z",
+   "rootKind": "picked"
+  },
+  {
+   "checks": [
+    {
+     "name": "injector detected",
+     "ok": null,
+     "detail": "{\"marker\":\"probe@457310.39999997616\",\"mode\":\"append\",\"at\":\"2026-11-04T08:49:10.366Z\",\"ok\":true,\"durationMs\":0.280792}"
+    },
+    {
+     "name": "recheck immediately before mutation detects the external edit (hash differs)",
+     "ok": true,
+     "detail": "9660b330 -> 98359c38"
+    },
+    {
+     "name": "does size or lastModified alone reveal it? (cache optimisations must not rely on these)",
+     "ok": null,
+     "detail": "{\"sizeChanged\":true,\"lastModifiedChanged\":true}"
+    },
+    {
+     "name": "final recheck passes while nothing changed",
+     "ok": true
+    },
+    {
+     "name": "Phase B outcome (external edit between recheck and write)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST (replacement overwrote it)"
+    },
+    {
+     "name": "Phase C injector result (an error here, e.g. sharing violation, means the OS protected the file)",
+     "ok": null,
+     "detail": "{\"marker\":\"C-during@457676.09999996424\",\"mode\":\"append\",\"at\":\"2026-11-04T08:49:10.618Z\",\"ok\":true,\"durationMs\":0.252167}"
+    },
+    {
+     "name": "Phase C writable close()",
+     "ok": null,
+     "detail": "ok"
+    },
+    {
+     "name": "Phase C outcome (external edit during replacement)",
+     "ok": null,
+     "detail": "external edit SILENTLY LOST"
+    },
+    {
+     "name": "exposure window recheck\u2192close, ms (this is the race window users must be warned about)",
+     "ok": null,
+     "detail": "{\"4 KiB\":{\"p50\":68.1,\"max\":75.3},\"1 MiB\":{\"p50\":72.9,\"max\":117.2},\"10 MiB\":{\"p50\":95.5,\"max\":133.6}}"
+    }
+   ],
+   "status": "pass",
+   "data": {
+    "injectorMode": "append",
+    "phaseA": {
+     "injectorAck": {
+      "marker": "A-before@457489.2999999523",
+      "mode": "append",
+      "at": "2026-11-04T08:49:10.449Z",
+      "ok": true,
+      "durationMs": 0.195375
+     },
+     "planned": {
+      "size": 9,
+      "lastModified": 1793782150373,
+      "hash": "9660b3303631e95817f72c7536939f0eca9e20c0d7b86382a39e4a98a1b26151"
+     },
+     "now": {
+      "size": 66,
+      "lastModified": 1793782150449,
+      "hash": "98359c38eb432a5369a563726d3d8cde380e923f3285bc4e87f180b9480fbcd1"
+     }
+    },
+    "phaseB": {
+     "injectorAck": {
+      "marker": "B-after-recheck@457604",
+      "mode": "append",
+      "at": "2026-11-04T08:49:10.549Z",
+      "ok": true,
+      "durationMs": 0.199791
+     },
+     "finalContent": "REPLACEMENT-B\n"
+    },
+    "phaseC": {
+     "injectorAck": {
+      "marker": "C-during@457676.09999996424",
+      "mode": "append",
+      "at": "2026-11-04T08:49:10.618Z",
+      "ok": true,
+      "durationMs": 0.252167
+     },
+     "close": "ok",
+     "finalSize": 4194304,
+     "startsWithExternal": false
+    },
+    "windowMs": {
+     "4 KiB": {
+      "p50": 68.1,
+      "max": 75.3
+     },
+     "1 MiB": {
+      "p50": 72.9,
+      "max": 117.2
+     },
+     "10 MiB": {
+      "p50": 95.5,
+      "max": 133.6
+     }
+    }
+   },
+   "durationMs": 3818.900000035763,
+   "id": "race",
+   "scenario": "race-append",
+   "at": "2026-11-04T08:49:14.007Z",
+   "rootKind": "picked"
+  }
+ ],
+ "manual": {}
+}
