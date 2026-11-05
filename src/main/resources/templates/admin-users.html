@@ -2,18 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout/shell :: shell('Users - FolderSync', ~{::main})}">
 <body>
-  <main id="content">
-    <h1>User administration</h1>
+  <main id="content" data-nav="users">
+    <div class="page-head"><div><h1>User administration</h1>
+    <p class="page-lede">Administrators manage accounts, quotas and passwords. They cannot see or open anyone's spaces, files or conflicts.</p></div></div>
     <p th:if="${notice}" role="status" th:text="${notice}"></p>
     <p th:if="${error}" role="alert" class="status-failed" th:text="${error}"></p>
-    <p class="note">Administrators manage accounts, quotas and passwords. They cannot see or open anyone's spaces, files or conflicts.</p>
+    <div class="table-wrap">
     <table>
-      <thead><tr><th>User</th><th>Role</th><th>Stored (MiB)</th><th>Quota (GiB)</th><th>Password</th><th>Account</th></tr></thead>
+      <thead><tr><th>User</th><th>Role</th><th class="num">Stored (MiB)</th><th>Quota (GiB)</th><th>Password</th><th>Account</th></tr></thead>
       <tbody>
         <tr th:each="r : ${rows}">
           <td th:text="${r.username}">name</td>
-          <td th:text="${r.role}">USER</td>
-          <td th:text="${#numbers.formatDecimal(r.usedBytes / 1048576.0, 1, 1)}">0</td>
+          <td><span class="tone-chip idle" th:text="${r.role}">USER</span></td>
+          <td class="num" th:text="${#numbers.formatDecimal(r.usedBytes / 1048576.0, 1, 1)}">0</td>
           <td>
             <form th:action="@{/admin/users/{id}/quota(id=${r.id})}" method="post" hx-boost="false" class="inline">
               <input type="text" name="quotaGiB" inputmode="decimal" size="6" placeholder="none" th:value="${r.quotaBytes != null} ? ${r.quotaBytes / 1073741824.0} : ''" aria-label="Quota in GiB, empty for none">
@@ -31,19 +32,24 @@
               <input type="hidden" name="enabled" th:value="${!r.enabled}">
               <button type="submit" th:text="${r.enabled} ? 'Disable' : 'Enable'">Disable</button>
             </form>
-            <span th:if="${r.self}">(you)</span>
+            <span class="muted" th:if="${r.self}">(you)</span>
           </td>
         </tr>
       </tbody>
     </table>
+    </div>
+    <section class="page-section">
     <h2>Create an account</h2>
-    <form th:action="@{/admin/users}" method="post" hx-boost="false">
+    <div class="card">
+    <form class="stack" th:action="@{/admin/users}" method="post" hx-boost="false">
       <label>Username <input type="text" name="username" required></label>
       <label>Initial password (at least 12 characters) <input type="password" name="password" autocomplete="new-password" minlength="12" required></label>
       <label>Role <select name="role"><option value="USER">User</option><option value="ADMIN">Administrator</option></select></label>
-      <button type="submit">Create</button>
+      <button type="submit" class="btn-primary">Create account</button>
     </form>
     <p class="note">There is no public signup. Share the initial password through a separate channel.</p>
+    </div>
+    </section>
   </main>
 </body>
 </html>

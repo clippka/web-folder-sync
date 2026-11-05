@@ -4,18 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sign in - FolderSync</title>
+  <link rel="stylesheet" th:href="@{/app/app.css}">
 </head>
-<body>
+<body class="auth">
   <main>
-    <h1>Sign in</h1>
-    <p th:if="${param.error}" role="alert">Sign-in failed. Check your username and password.</p>
-    <p th:if="${param.logout}">You have been signed out.</p>
-    <p th:if="${param.changed}">Your password was changed. Sign in again with the new password.</p>
-    <form th:action="@{/login}" method="post">
-      <label>Username <input type="text" name="username" autocomplete="username" required autofocus></label>
-      <label>Password <input type="password" name="password" autocomplete="current-password" required></label>
-      <button type="submit">Sign in</button>
-    </form>
+    <div class="auth-brand"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect width="24" height="24" rx="6" fill="currentColor"/><path d="M6 9.5h10.5M13.5 6.5l3 3-3 3M18 14.5H7.5M10.5 11.5l-3 3 3 3" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>FolderSync</span></div>
+    <div class="auth-card">
+      <h1>Sign in</h1>
+      <p th:if="${param.error}" role="alert">Sign-in failed. Check your username and password.</p>
+      <p th:if="${param.logout}" role="status">You have been signed out.</p>
+      <p th:if="${param.changed}" role="status">Your password was changed. Sign in again with the new password.</p>
+      <form th:action="@{/login}" method="post">
+        <label>Username <input type="text" name="username" autocomplete="username" required autofocus></label>
+        <label>Password <input type="password" name="password" autocomplete="current-password" required></label>
+        <button type="submit" class="btn-primary">Sign in</button>
+      </form>
+    </div>
+    <p class="note auth-foot">Accounts are created by your administrator.</p>
   </main>
 </body>
 </html>

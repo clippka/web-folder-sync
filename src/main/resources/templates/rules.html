@@ -2,38 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout/shell :: shell('Ignore rules - FolderSync', ~{::main})}">
 <body>
-  <main id="content">
-    <p><a th:href="@{/spaces/{id}(id=${space.id})}">&larr; <span th:text="${space.name}">space</span></a></p>
-    <h1>Ignore rules</h1>
+  <main id="content" data-nav="spaces">
+    <a class="back" th:href="@{/spaces/{id}(id=${space.id})}"><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 3.5 5 8l4.5 4.5"/></svg><span th:text="${space.name}">space</span></a>
+    <div class="page-head"><div><h1>Ignore rules</h1>
+    <p class="page-lede">Paths are excluded by <code>.gitignore</code> then <code>.syncignore</code> files, from the root down; deeper files and later lines win. Every <code>.git</code> path is always excluded. Excluded paths are never deleted on either side, and the rule files themselves are synchronized. No dependency or build folders are excluded unless a rule says so.</p></div></div>
     <p th:if="${error}" role="alert" class="status-failed" th:text="${error}"></p>
-    <p>Paths are excluded by <code>.gitignore</code> then <code>.syncignore</code> files, from the root down; deeper files and later lines win. Every <code>.git</code> path is always excluded. Excluded paths are never deleted on either side, and the rule files themselves are synchronized. No dependency or build folders are excluded unless a rule says so.</p>
 
+    <section class="page-section">
     <h2>Why is this path included or excluded?</h2>
-    <form th:action="@{/spaces/{id}/rules(id=${space.id})}" method="get" hx-boost="false">
+    <div class="card">
+    <form class="stack" th:action="@{/spaces/{id}/rules(id=${space.id})}" method="get" hx-boost="false">
       <label>Path relative to the space <input type="text" name="path" th:value="${asked}" required></label>
       <label><input type="checkbox" name="directory" value="true"> It is a folder</label>
       <button type="submit">Explain</button>
     </form>
-    <p th:if="${explanation != null}" role="status"><strong th:text="${explanation.ignored} ? 'Excluded' : 'Included'">x</strong>: <span th:text="${explanation.explanation}">why</span></p>
+    <p class="verdict" th:if="${explanation != null}" role="status"><strong class="tone-chip" th:classappend="${explanation.ignored} ? 'warn' : 'ok'" th:text="${explanation.ignored} ? 'Excluded' : 'Included'">x</strong> <span th:text="${explanation.explanation}">why</span></p>
+    </div>
+    </section>
 
+    <section class="page-section">
     <h2>Rule files in this space</h2>
     <p th:if="${files.isEmpty()}">No <code>.gitignore</code> or <code>.syncignore</code> has been synchronized yet, so only <code>.git</code> is excluded.</p>
-    <details th:each="f : ${files}"><summary th:text="${f.path}">path</summary><pre class="preview" th:text="${f.text}"></pre></details>
+    <div class="rule-files" th:unless="${files.isEmpty()}">
+      <details th:each="f : ${files}"><summary th:text="${f.path}">path</summary><pre class="preview" th:text="${f.text}"></pre></details>
+    </div>
+    </section>
 
+    <section class="page-section">
     <h2>Preview a rule change</h2>
     <p class="note">Paste a proposed version of a rule file to see which synchronized paths would stop or start being synchronized. Nothing is saved or changed; to apply it, edit the file in a connected folder and sync.</p>
-    <form th:action="@{/spaces/{id}/rules/preview(id=${space.id})}" method="post" hx-boost="false">
+    <div class="card">
+    <form class="stack" th:action="@{/spaces/{id}/rules/preview(id=${space.id})}" method="post" hx-boost="false">
       <label>Rule file <input type="text" name="path" th:value="${proposedPath} ?: '.gitignore'" required></label>
       <label>Proposed contents <textarea name="text" rows="8" cols="60" th:text="${proposedText}"></textarea></label>
       <button type="submit">Preview impact</button>
     </form>
-    <div th:if="${preview != null}">
-      <p th:text="${preview.note}">note</p>
-      <h3 th:text="'Would stop being synchronized (' + ${preview.newlyIgnoredTotal} + ')'">x</h3>
-      <ul><li th:each="c : ${preview.newlyIgnored}" th:text="${c.path} + (${c.directory} ? '/' : '')">p</li></ul>
-      <h3 th:text="'Would be synchronized again (' + ${preview.newlyIncludedTotal} + ')'">x</h3>
-      <ul><li th:each="c : ${preview.newlyIncluded}" th:text="${c.path} + (${c.directory} ? '/' : '')">p</li></ul>
+    <div class="impact" th:if="${preview != null}">
+      <p class="note" th:text="${preview.note}">note</p>
+      <div><h3 th:text="'Would stop being synchronized (' + ${preview.newlyIgnoredTotal} + ')'">x</h3>
+      <ul class="paths"><li th:each="c : ${preview.newlyIgnored}" th:text="${c.path} + (${c.directory} ? '/' : '')">p</li></ul></div>
+      <div><h3 th:text="'Would be synchronized again (' + ${preview.newlyIncludedTotal} + ')'">x</h3>
+      <ul class="paths"><li th:each="c : ${preview.newlyIncluded}" th:text="${c.path} + (${c.directory} ? '/' : '')">p</li></ul></div>
     </div>
+    </div>
+    </section>
   </main>
 </body>
 </html>

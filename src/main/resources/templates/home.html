@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout/shell :: shell('FolderSync', ~{::main})}">
 <body>
-  <main id="content">
+  <main id="content" class="home">
     <h1>FolderSync</h1>
     <p th:if="${currentUserId == ''}"><a th:href="@{/login}" hx-boost="false">Sign in</a> to manage your sync spaces.</p>
     <p th:unless="${currentUserId == ''}"><a th:href="@{/spaces}">Open your spaces</a></p>

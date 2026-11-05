@@ -3,32 +3,47 @@
       th:replace="~{layout/shell :: shell('Account - FolderSync', ~{::main})}">
 <body>
   <main id="content">
-    <h1>Account</h1>
+    <div class="page-head"><h1>Account</h1></div>
     <p th:if="${notice}" role="status" th:text="${notice}"></p>
     <p th:if="${error}" role="alert" class="status-failed" th:text="${error}"></p>
 
-    <h2>Storage and limits</h2>
-    <dl class="kv">
-      <dt>Stored for you (all spaces)</dt><dd th:text="${#numbers.formatDecimal(usage.committedBytes / 1048576.0, 1, 1)} + ' MiB'">0 MiB</dd>
-      <dt>Reserved for uploads in progress</dt><dd th:text="${#numbers.formatDecimal(usage.reservedBytes / 1048576.0, 1, 1)} + ' MiB'">0 MiB</dd>
-      <dt>Your quota</dt>
-      <dd><span th:if="${usage.quotaBytes == null}">No quota (limited only by server disk space)</span><span th:if="${usage.quotaBytes != null}" th:text="${#numbers.formatDecimal(usage.quotaBytes / 1048576.0, 1, 1)} + ' MiB across all your spaces'">quota</span></dd>
-      <dt>Largest file</dt><dd th:text="${limits.maxFileSizeBytes} + ' bytes'">104857600 bytes</dd>
-      <dt>Files per space</dt><dd th:text="${limits.maxIncludedFiles}">25000</dd>
-    </dl>
-    <p class="note">Lowering a quota never removes data: it only stops new uploads until you are under it. Downloads and confirmed deletions keep working.</p>
+    <div class="split">
+      <section class="card">
+        <h2>Storage and limits</h2>
+        <div class="quota" th:if="${usage.quotaBytes != null}">
+          <p class="quota-figure">
+            <strong th:text="${#numbers.formatDecimal((usage.committedBytes + usage.reservedBytes) / 1048576.0, 1, 1)} + ' MiB'">0 MiB</strong>
+            <span class="note" th:text="'of ' + ${#numbers.formatDecimal(usage.quotaBytes / 1048576.0, 1, 1)} + ' MiB used'">of 0 MiB used</span>
+          </p>
+          <meter aria-label="Storage used, including uploads in progress" min="0" optimum="0" th:max="${usage.quotaBytes}" th:low="${usage.quotaBytes * 0.75}" th:high="${usage.quotaBytes * 0.9}" th:value="${usage.committedBytes + usage.reservedBytes}"></meter>
+        </div>
+        <dl class="kv">
+          <dt>Stored for you (all spaces)</dt><dd th:text="${#numbers.formatDecimal(usage.committedBytes / 1048576.0, 1, 1)} + ' MiB'">0 MiB</dd>
+          <dt>Reserved for uploads in progress</dt><dd th:text="${#numbers.formatDecimal(usage.reservedBytes / 1048576.0, 1, 1)} + ' MiB'">0 MiB</dd>
+          <dt>Your quota</dt>
+          <dd><span th:if="${usage.quotaBytes == null}">No quota (limited only by server disk space)</span><span th:if="${usage.quotaBytes != null}" th:text="${#numbers.formatDecimal(usage.quotaBytes / 1048576.0, 1, 1)} + ' MiB across all your spaces'">quota</span></dd>
+          <dt>Largest file</dt><dd th:text="${#numbers.formatDecimal(limits.maxFileSizeBytes / 1048576.0, 1, 0)} + ' MiB'">100 MiB</dd>
+          <dt>Files per space</dt><dd th:text="${limits.maxIncludedFiles}">25000</dd>
+        </dl>
+        <p class="note">Lowering a quota never removes data: it only stops new uploads until you are under it. Downloads and confirmed deletions keep working.</p>
+      </section>
 
-    <h2>Change password</h2>
-    <form th:action="@{/account/password}" method="post" hx-boost="false">
-      <label>Current password <input type="password" name="currentPassword" autocomplete="current-password" required></label>
-      <label>New password (at least 12 characters) <input type="password" name="newPassword" autocomplete="new-password" minlength="12" required></label>
-      <label>Repeat new password <input type="password" name="confirmPassword" autocomplete="new-password" minlength="12" required></label>
-      <button type="submit">Change password</button>
-    </form>
-    <p class="note">Changing your password signs you out everywhere.</p>
+      <section class="card">
+        <h2>Change password</h2>
+        <form class="stack" th:action="@{/account/password}" method="post" hx-boost="false">
+          <label>Current password <input type="password" name="currentPassword" autocomplete="current-password" required></label>
+          <label>New password (at least 12 characters) <input type="password" name="newPassword" autocomplete="new-password" minlength="12" required></label>
+          <label>Repeat new password <input type="password" name="confirmPassword" autocomplete="new-password" minlength="12" required></label>
+          <button type="submit" class="btn-primary">Change password</button>
+        </form>
+        <p class="note">Changing your password signs you out everywhere.</p>
+      </section>
+    </div>
 
-    <h2>Privacy</h2>
-    <p>Files are protected in transit by HTTPS, but they are stored on the server without end-to-end encryption, so the server operator can read them. Only the current version of each file is kept.</p>
+    <section class="page-section">
+      <h2>Privacy</h2>
+      <p class="page-lede">Files are protected in transit by HTTPS, but they are stored on the server without end-to-end encryption, so the server operator can read them. Only the current version of each file is kept.</p>
+    </section>
   </main>
 </body>
 </html>

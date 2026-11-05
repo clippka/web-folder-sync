@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="shell(title, content)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="shell(title, content)">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,20 +12,28 @@
   <link rel="stylesheet" th:href="@{/app/app.css}">
 </head>
 <body hx-boost="true" hx-target="#content" hx-select="#content" hx-swap="outerHTML">
-  <header>
-    <strong>FolderSync</strong>
-    <nav th:if="${currentUserId != ''}">
-      <a th:href="@{/spaces}">Spaces</a>
-      <a th:href="@{/devices}">Devices</a>
-      <a th:href="@{/account}">Account</a>
-      <a th:if="${isAdmin}" th:href="@{/admin/users}">Users</a>
-      <a th:href="@{/help}">Help</a>
-      <form th:action="@{/logout}" method="post" hx-boost="false" class="inline" id="logout-form">
-        <span th:text="${currentUsername}"></span>
-        <button type="submit">Sign out</button>
-      </form>
+  <header class="topbar">
+    <a class="brand" th:href="@{/}"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect width="24" height="24" rx="6" fill="currentColor"/><path d="M6 9.5h10.5M13.5 6.5l3 3-3 3M18 14.5H7.5M10.5 11.5l-3 3 3 3" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><strong>FolderSync</strong></a>
+    <nav class="topnav" aria-label="Main" th:if="${currentUserId != ''}">
+      <a data-nav="spaces" th:href="@{/spaces}">Spaces</a>
+      <a data-nav="devices" th:href="@{/devices}">Devices</a>
+      <a data-nav="users" th:if="${isAdmin}" th:href="@{/admin/users}">Users</a>
+      <a data-nav="help" th:href="@{/help}">Help</a>
     </nav>
     <span id="coordinator-status"></span>
+    <button type="button" class="user-trigger" popovertarget="user-menu" th:if="${currentUserId != ''}">
+      <span class="avatar" aria-hidden="true" th:text="${#strings.substring(currentUsername, 0, 1)}">a</span>
+      <span class="user-name" th:text="${currentUsername}">user</span>
+    </button>
+    <!-- Native popover: closes on Escape or an outside click with no script. The header is never swapped, so Account is a
+         button that both hides the popover and loads the page through HTMX; a boosted link would leave the menu open. -->
+    <div id="user-menu" class="menu" popover th:if="${currentUserId != ''}">
+      <p class="menu-label">Signed in as <strong th:text="${currentUsername}">user</strong></p>
+      <button type="button" class="menu-item" popovertarget="user-menu" popovertargetaction="hide" th:attr="hx-get=@{/account}" hx-push-url="true">Account</button>
+      <form th:action="@{/logout}" method="post" hx-boost="false" class="inline" id="logout-form">
+        <button type="submit" class="menu-item">Sign out</button>
+      </form>
+    </div>
   </header>
   <!-- Only #content is an HTMX swap target. The coordinator script sits outside it and loads once. -->
   <main id="content" th:replace="${content}">content</main>

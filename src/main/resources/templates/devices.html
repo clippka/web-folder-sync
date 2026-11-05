@@ -2,19 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout/shell :: shell('Devices - FolderSync', ~{::main})}">
 <body>
-  <main id="content">
-    <h1>Devices</h1>
+  <main id="content" data-nav="devices">
+    <div class="page-head"><div><h1>Devices</h1>
+    <p class="page-lede">A device is a browser profile that connected a folder. Revoking one stops it from planning, uploading or committing at once. Files already on that computer or on the server are not touched. Connecting again from that browser starts a fresh device.</p></div></div>
     <p th:if="${notice}" role="status" th:text="${notice}"></p>
     <p th:if="${error}" role="alert" class="status-failed" th:text="${error}"></p>
-    <p>A device is a browser profile that connected a folder. Revoking one stops it from planning, uploading or committing at once. Files already on that computer or on the server are not touched. Connecting again from that browser starts a fresh device.</p>
-    <p th:if="${devices.isEmpty()}">No device has connected a folder yet.</p>
-    <table th:unless="${devices.isEmpty()}">
-      <thead><tr><th>Label</th><th>Last seen</th><th>Status</th><th></th></tr></thead>
+    <div class="empty" th:if="${devices.isEmpty()}"><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12V4.5A1 1 0 0 1 3 3.5h3l1.5 1.5H13a1 1 0 0 1 1 1V12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1Z"/></svg><p>No device has connected a folder yet. Open a space in desktop Chrome or Edge and connect a local folder.</p></div>
+    <div class="table-wrap" th:unless="${devices.isEmpty()}">
+    <table>
+      <thead><tr><th>Label</th><th>Last seen</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr></thead>
       <tbody>
         <tr th:each="d : ${devices}">
           <td th:text="${d.label}">label</td>
-          <td><span th:if="${d.lastSeen != null}" th:text="${#dates.format(new java.util.Date(d.lastSeen), 'yyyy-MM-dd HH:mm')} + ' UTC'">time</span><span th:if="${d.lastSeen == null}">never</span></td>
-          <td th:text="${d.revoked} ? 'Revoked' : 'Active'">Active</td>
+          <td><span class="mono" th:if="${d.lastSeen != null}" th:text="${#dates.format(new java.util.Date(d.lastSeen), 'yyyy-MM-dd HH:mm')} + ' UTC'">time</span><span class="muted" th:if="${d.lastSeen == null}">never</span></td>
+          <td><span class="tone-chip" th:classappend="${d.revoked} ? 'idle' : 'ok'" th:text="${d.revoked} ? 'Revoked' : 'Active'">Active</span></td>
           <td>
             <form th:unless="${d.revoked}" th:action="@{/devices/{id}/revoke(id=${d.id})}" method="post" hx-boost="false">
               <button type="submit" class="danger">Revoke</button>
@@ -23,6 +24,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </main>
 </body>
 </html>

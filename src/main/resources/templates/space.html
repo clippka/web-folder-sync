@@ -2,54 +2,83 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout/shell :: shell(${space.name + ' - FolderSync'}, ~{::main})}">
 <body>
-  <main id="content">
-    <p><a th:href="@{/spaces}">&larr; All spaces</a></p>
+  <main id="content" data-nav="spaces">
+    <a class="back" th:href="@{/spaces}"><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 3.5 5 8l4.5 4.5"/></svg>All spaces</a>
     <section id="space-panel" th:attr="data-space-id=${space.id},data-space-name=${space.name}">
-      <h1 th:text="${space.name}">Space</h1>
+      <div class="space-head">
+        <div class="space-title">
+          <h1 th:text="${space.name}">Space</h1>
+          <span class="badge idle" data-field="status" role="status">Not connected</span>
+        </div>
+        <nav class="subnav" aria-label="This space">
+          <a th:href="@{/spaces/{id}/rules(id=${space.id})}"><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 3.5h11L9.5 8.5v4l-3-1.5v-2.5Z"/></svg>Ignore rules</a>
+          <a th:href="@{/spaces/{id}/activity(id=${space.id})}"><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 8.5h3l2-5 3 9 2-4h3"/></svg>Activity</a>
+          <a th:href="@{/help}"><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"/><path d="M6.25 6.25a1.75 1.75 0 1 1 2.6 1.53c-.5.28-.85.68-.85 1.22"/><path d="M8 11.25v.01"/></svg>Help</a>
+        </nav>
+      </div>
+      <p class="facts">
+        <span><strong th:text="${#numbers.formatInteger(summary.activeFiles, 1, 'COMMA')}">0</strong> files on the server</span>
+        <span th:classappend="${summary.openConflicts > 0} ? 'has-conflicts'"><strong th:text="${summary.openConflicts}">0</strong> <span th:text="${summary.openConflicts == 1} ? 'conflict to review' : 'conflicts to review'">conflicts to review</span></span>
+        <span><strong th:text="${summary.devices.size()}">0</strong> <span th:text="${summary.devices.size() == 1} ? 'connected device' : 'connected devices'">connected devices</span></span>
+      </p>
       <p id="unsupported" hidden role="alert">This browser cannot sync local folders. Use desktop Chrome or Edge. You can still manage your account and spaces here.</p>
       <noscript><p role="alert">Folder sync needs JavaScript.</p></noscript>
-
-      <p>
-        <span class="badge idle" data-field="status" role="status">Not connected</span>
-        <a th:href="@{/spaces/{id}/rules(id=${space.id})}">Ignore rules</a> &middot;
-        <a th:href="@{/spaces/{id}/activity(id=${space.id})}">Activity</a> &middot;
-        <a th:href="@{/help}">Help</a>
-      </p>
-      <p class="note" th:text="${summary.activeFiles} + ' files on the server, ' + ${summary.openConflicts} + ' conflicts to review, ' + ${summary.devices.size()} + ' connected device(s)'">summary</p>
       <p class="server-changes" data-field="server-changes" hidden aria-live="polite"></p>
 
-      <p data-field="binding">Checking this browser's connection&hellip;</p>
+      <div class="console">
+        <div class="console-head">
+          <div class="binding">
+            <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12V4.5A1 1 0 0 1 3 3.5h3l1.5 1.5H13a1 1 0 0 1 1 1V12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1Z"/></svg>
+            <p data-field="binding">Checking this browser's connection&hellip;</p>
+          </div>
+          <p class="note">Nothing syncs automatically.</p>
+        </div>
 
-      <p class="note">Nothing syncs automatically. Changes move only when you press <strong>Sync now</strong>. <strong>Scan</strong> only shows what would happen.</p>
+        <div class="actions" data-field="connect-controls">
+          <label>Device label (optional) <input type="text" data-field="device-label" maxlength="60"></label>
+          <button type="button" class="btn-primary" data-action="connect">Connect local folder</button>
+          <button type="button" class="btn-primary" data-action="reconnect" hidden>Reconnect folder</button>
+        </div>
+        <div class="actions" data-field="run-controls" hidden>
+          <div class="flow">
+            <div class="flow-step">
+              <button type="button" data-action="scan">Scan</button>
+              <span class="flow-hint">Preview only</span>
+            </div>
+            <svg class="icon flow-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8h11.5M10 4.5 13.5 8 10 11.5"/></svg>
+            <div class="flow-step">
+              <!-- No icon in this button: status.ts assigns its textContent ("Sync now" / "Resume sync"). -->
+              <button type="button" class="btn-primary" data-action="sync">Sync now</button>
+              <span class="flow-hint">Moves the changes</span>
+            </div>
+          </div>
+          <button type="button" data-action="cancel" hidden>Cancel</button>
+          <button type="button" class="btn-quiet" data-action="disconnect">Disconnect</button>
+        </div>
 
-      <div class="actions" data-field="connect-controls">
-        <label>Device label (optional) <input type="text" data-field="device-label" maxlength="60"></label>
-        <button type="button" data-action="connect">Connect local folder</button>
-        <button type="button" data-action="reconnect" hidden>Reconnect folder</button>
+        <div class="run-state">
+          <p data-field="phase" aria-live="polite"></p>
+          <progress data-field="progress" max="100" value="0" hidden aria-label="Run progress"></progress>
+        </div>
       </div>
-      <div class="actions" data-field="run-controls" hidden>
-        <button type="button" data-action="scan">Scan</button>
-        <button type="button" data-action="sync">Sync now</button>
-        <button type="button" data-action="cancel" hidden>Cancel</button>
-        <button type="button" data-action="disconnect">Disconnect</button>
-      </div>
 
-      <p data-field="phase" aria-live="polite"></p>
-      <progress data-field="progress" max="100" value="0" hidden></progress>
       <div data-field="summary"></div>
       <div data-field="conflicts" class="conflicts" hidden aria-live="polite"></div>
       <h2 data-field="files-heading" hidden>Files</h2>
       <ul data-field="files" class="files"></ul>
-      <details data-field="ignored-box" hidden><summary>Ignored paths</summary><ul data-field="ignored"></ul></details>
-      <details class="note">
-        <summary>How connecting works</summary>
-        <ul>
-          <li>Each browser profile connects its own folder. The connection and sync records live in this browser's site data: if you clear them, this browser forgets the folder and joins again as a new device. Joining only ever adds files; nothing is deleted because a record is missing.</li>
-          <li>The app can detect overlapping folders only inside one browser profile. Do not connect the same folder (or a folder and its parent) from two different browser profiles or computers at once.</li>
-          <li>Syncing runs only while this page is open and you started it. A suspended or closed tab stops the run; start it again to continue. If another program edits a file at the very moment it is replaced, that edit can be lost: close editors on files you expect to change remotely.</li>
-        </ul>
-      </details>
-      <p class="note">Only the current version of each file is kept: no history, trash or per-file restore. Content is stored on the server unencrypted by the app, so the server operator can read it.</p>
+
+      <div class="space-foot">
+        <details data-field="ignored-box" hidden><summary>Ignored paths</summary><ul data-field="ignored"></ul></details>
+        <details class="note">
+          <summary>How connecting works</summary>
+          <ul>
+            <li>Each browser profile connects its own folder. The connection and sync records live in this browser's site data: if you clear them, this browser forgets the folder and joins again as a new device. Joining only ever adds files; nothing is deleted because a record is missing.</li>
+            <li>The app can detect overlapping folders only inside one browser profile. Do not connect the same folder (or a folder and its parent) from two different browser profiles or computers at once.</li>
+            <li>Syncing runs only while this page is open and you started it. A suspended or closed tab stops the run; start it again to continue. If another program edits a file at the very moment it is replaced, that edit can be lost: close editors on files you expect to change remotely.</li>
+          </ul>
+        </details>
+        <p class="note">Only the current version of each file is kept: no history, trash or per-file restore. Content is stored on the server unencrypted by the app, so the server operator can read it.</p>
+      </div>
     </section>
   </main>
 </body>
